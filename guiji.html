@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.0/jquery.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="content">
+        <canvas id="canvas" width="375" height="500"></canvas>
+        <img src="/img/demo.jpg" alt="" id="img" style="width: 375px;">
+        <a id="link"></a>
+        <a style="display:none" id="download" download="clock.webm">Download video</a>
+    </div>
+    <script src="/js/whammy.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        .content {
+            width: 100%;
+            height: 100vh;
+        }
+        #img {
+            display: none;
+        }
+    </style>
+    <script>
+        $(() => {
+            
+            const list = [
+                {
+                    time: 150,
+                    top: 0
+                },
+                {
+                    time: 150,
+                    top: 10
+                },
+                {
+                    time: 150,
+                    top: 50
+                },
+                {
+                    time: 150,
+                    top: 100
+                },
+                {
+                    time: 150,
+                    top: 150
+                },
+                {
+                    time: 150,
+                    top: 120
+                },
+                {
+                    time: 150,
+                    top: 160
+                },
+                {
+                    time: 150,
+                    top: 200
+                },
+                {
+                    time: 150,
+                    top: 250
+                },
+                {
+                    time: 150,
+                    top: 270
+                },
+                {
+                    time: 150,
+                    top: 300
+                },
+                {
+                    time: 150,
+                    top: 360
+                },
+                {
+                    time: 150,
+                    top: 400
+                },
+                {
+                    time: 150,
+                    top: 320
+                },
+                {
+                    time: 150,
+                    top: 400
+                },
+                {
+                    time: 150,
+                    top: 450
+                },
+                {
+                    time: 150,
+                    top: 500
+                },
+                {
+                    time: 150,
+                    top: 550
+                },
+                {
+                    time: 150,
+                    top: 600
+                },
+                {
+                    time: 150,
+                    top: 650
+                },
+                {
+                    time: 150,
+                    top: 700
+                },
+                {
+                    time: 150,
+                    top: 750
+                },
+                {
+                    time: 150,
+                    top: 800
+                },
+                {
+                    time: 150,
+                    top: 850
+                },
+                {
+                    time: 150,
+                    top: 900
+                },
+                {
+                    time: 150,
+                    top: 950
+                },
+                {
+                    time: 150,
+                    top: 1000
+                },
+                {
+                    time: 150,
+                    top: 1050
+                },
+                {
+                    time: 150,
+                    top: 1100
+                },
+                {
+                    time: 150,
+                    top: 3000
+                },
+                {
+                    type: 1,
+                    time: 200,
+                    top: 93,
+                    left: 150,
+                    text: '张三'
+                },
+                {
+                    type: 1,
+                    time: 500,
+                    top: 145,
+                    left: 285,
+                    text: '身份证'
+                }
+            ]
+            let time = 0
+            // ctx.font="16px"
+            // list.forEach((item) => {
+            //     setTimeout(() => {
+            //         let h = 500 + item.top
+            //         ctx.save()
+            //         if (item.type) {
+            //             console.log(h)
+            //             ctx.fillText(item.text, item.left, item.top)
+            //         } else {
+            //             console.log(h)
+            //             ctx.drawImage(img, 0, 0, 375, h, 0, (500 - h), 375, h)
+            //         }
+            //         ctx.restore()
+            //         video.add(ctx)
+            //     }, time)
+            //     time += item.time
+            // })
+            var video = new Whammy.Video(15);
+            const ctx = document.getElementById('canvas').getContext('2d')
+            const img = document.getElementById('img')
+            let h = 500
+            let count = 0
+            var timer = setInterval(() => {
+                if (h < 3912) {
+                    ctx.save()
+                    ctx.drawImage(img, 0, 0, 375, h, 0, (500 - h), 375, h)
+                    h += 10
+                    ctx.restore()
+                    video.add(ctx)
+                } else {
+                    clearInterval(timer)
+                    requestAnimationFrame(finalizeVideo)
+                    console.log(count)
+                }
+            },20)
+            function finalizeVideo(){
+                var start_time = +new Date;
+                video.compile(false, function(output){         
+                    var end_time = +new Date;
+                    var url = webkitURL.createObjectURL(output);
+                    console.log("url:"+url);
+                    document.getElementById('download').style.display = '';
+                    document.getElementById('download').href = url;
+                })
+            }
+            // next()
+            // canvas.toDataURL('image/jpg').replace("image/png", "image/octet-stream")
+            // var link = document.getElementById('link');
+            // link.setAttribute('download', 'my.png');
+            // link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+            // link.click();
+            // console.log(canvas.toDataURL('image/jpg').replace("image/png", "image/octet-stream"))
+            // const pages = ctx.getImageData(0, 0, 375, 500)
+            // console.log(pages)
+        })
+    </script>
+</body>
+</html>
