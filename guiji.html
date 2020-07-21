@@ -8,210 +8,132 @@
 </head>
 <body>
     <div class="content">
-        <canvas id="canvas" width="375" height="500"></canvas>
-        <img src="/img/demo.jpg" alt="" id="img" style="width: 375px;">
+        <canvas id="canvas" width="375" height="599"></canvas>
+        <img src="/img/zhuzhai.jpg" alt="" id="img" style="width: 375px;">
+        <img src="/img/top.png" alt="" srcset="" id="top">
+        <img src="/img/bottom.png" alt="" id="bottom">
+        <img src="/img/click.png" alt="" id="touch">
         <a id="link"></a>
+        <button class="play">播放</button>
+        <button class="createVideo">生成视频</button>
         <a style="display:none" id="download" download="clock.webm">Download video</a>
     </div>
+    <canvas id="bgcanvas" width="375" height="3280"></canvas>
     <script src="/js/whammy.js"></script>
+    <script src="/js/data.js"></script>
     <style>
         * {
             padding: 0;
             margin: 0;
         }
+        .canvas {
+            border: 1px solid #333333;
+        }
         .content {
             width: 100%;
             height: 100vh;
+            padding-top: 50px;
         }
-        #img {
+        #img, #top, #bottom {
             display: none;
         }
     </style>
     <script>
+        let ctxList = []
         $(() => {
-            
-            const list = [
-                {
-                    time: 150,
-                    top: 0
-                },
-                {
-                    time: 150,
-                    top: 10
-                },
-                {
-                    time: 150,
-                    top: 50
-                },
-                {
-                    time: 150,
-                    top: 100
-                },
-                {
-                    time: 150,
-                    top: 150
-                },
-                {
-                    time: 150,
-                    top: 120
-                },
-                {
-                    time: 150,
-                    top: 160
-                },
-                {
-                    time: 150,
-                    top: 200
-                },
-                {
-                    time: 150,
-                    top: 250
-                },
-                {
-                    time: 150,
-                    top: 270
-                },
-                {
-                    time: 150,
-                    top: 300
-                },
-                {
-                    time: 150,
-                    top: 360
-                },
-                {
-                    time: 150,
-                    top: 400
-                },
-                {
-                    time: 150,
-                    top: 320
-                },
-                {
-                    time: 150,
-                    top: 400
-                },
-                {
-                    time: 150,
-                    top: 450
-                },
-                {
-                    time: 150,
-                    top: 500
-                },
-                {
-                    time: 150,
-                    top: 550
-                },
-                {
-                    time: 150,
-                    top: 600
-                },
-                {
-                    time: 150,
-                    top: 650
-                },
-                {
-                    time: 150,
-                    top: 700
-                },
-                {
-                    time: 150,
-                    top: 750
-                },
-                {
-                    time: 150,
-                    top: 800
-                },
-                {
-                    time: 150,
-                    top: 850
-                },
-                {
-                    time: 150,
-                    top: 900
-                },
-                {
-                    time: 150,
-                    top: 950
-                },
-                {
-                    time: 150,
-                    top: 1000
-                },
-                {
-                    time: 150,
-                    top: 1050
-                },
-                {
-                    time: 150,
-                    top: 1100
-                },
-                {
-                    time: 150,
-                    top: 3000
-                },
-                {
-                    type: 1,
-                    time: 200,
-                    top: 93,
-                    left: 150,
-                    text: '张三'
-                },
-                {
-                    type: 1,
-                    time: 500,
-                    top: 145,
-                    left: 285,
-                    text: '身份证'
-                }
-            ]
-            let time = 0
-            // ctx.font="16px"
-            // list.forEach((item) => {
-            //     setTimeout(() => {
-            //         let h = 500 + item.top
-            //         ctx.save()
-            //         if (item.type) {
-            //             console.log(h)
-            //             ctx.fillText(item.text, item.left, item.top)
-            //         } else {
-            //             console.log(h)
-            //             ctx.drawImage(img, 0, 0, 375, h, 0, (500 - h), 375, h)
-            //         }
-            //         ctx.restore()
-            //         video.add(ctx)
-            //     }, time)
-            //     time += item.time
-            // })
-            var video = new Whammy.Video(15);
-            const ctx = document.getElementById('canvas').getContext('2d')
-            const img = document.getElementById('img')
-            let h = 500
-            let count = 0
-            var timer = setInterval(() => {
-                if (h < 3912) {
-                    ctx.save()
-                    ctx.drawImage(img, 0, 0, 375, h, 0, (500 - h), 375, h)
-                    h += 10
-                    ctx.restore()
-                    video.add(ctx)
+            let list = dataList()
+            // let list = [
+            //     {"time":1595213686906,"top":1,"type":1},
+            //     {"time":1595213686923,"top":6,"type":1},
+            //     {"time":1595213686940,"top":13,"type":1},
+            //     {"time":1595213686957,"top":24,"type":1},
+            //     {"time":1595213686974,"top":37,"type":1},
+            //     {"time":1595213686990,"top":51,"type":1},
+            //     {"time":1595213687007,"top":67,"type":1},
+            //     {"time":1595213687024,"top":84,"type":1},
+            //     {"time":1595213687041,"top":103,"type":1},
+            //     {"time":1595213689041,"top":500, "left": 300, "type":3},
+            //     {"time":1595213699341,"top":120,"type":1}
+            // ]
+            list.forEach((item, index) => {
+                if (index == 0) {
+                    item.interval = 0
                 } else {
-                    clearInterval(timer)
-                    requestAnimationFrame(finalizeVideo)
-                    console.log(count)
+                    item.interval = item.time - list[index - 1].time
                 }
-            },20)
+            })
+            let time = 0
+            let top = 0
+            // ctx.font="16px"
+            var video = new Whammy.Video(50);
+            const canvas = document.getElementById('canvas')
+            const ctx = canvas.getContext('2d')
+            const touch = document.getElementById('touch')
+            let img = document.getElementById('img')
+            // const top = document.getElementById('top')
+            const bottom = document.getElementById('bottom')
+            // ctx.drawImage(top, 0, 0, 375, 68, 0, 0, 375, 68)
+            ctx.drawImage(bottom, 0, 0, 375, 50, 0, 549, 375, 50)
+            ctx.drawImage(img, 0, 0, 375, 549, 0, 0, 375, 549)
+            // ctx.drawImage(img, 0, 0, 375, 549, 0, 68, 375, 549)
+            $('#bgcanvas').height('3280px')
+            const bgcanvas = document.getElementById('bgcanvas')
+            const bgctx = bgcanvas.getContext('2d')
+            bgctx.drawImage(img, 0, 0, 375, 3280)
+            // bgctx.font = "14px SourceHanSansCN-Regular"
+            // bgctx.fillText('测试文字', 100, 100)
+            let newImg = bgctx.getImageData(0, 0, 375, 3280)
+
             function finalizeVideo(){
                 var start_time = +new Date;
                 video.compile(false, function(output){         
                     var end_time = +new Date;
-                    var url = webkitURL.createObjectURL(output);
+                    var url = URL.createObjectURL(output);
                     console.log("url:"+url);
                     document.getElementById('download').style.display = '';
                     document.getElementById('download').href = url;
                 })
             }
+
+            $('.play').click(e => {
+                e.preventDefault()
+                list.forEach((item, index) => {
+                    setTimeout(() => {
+                        let h = 667 + item.top
+                        ctx.save()
+                        if (item.type == 2) {
+                            console.log(item)
+                            bgctx.font = '14px SourceHanSansCN-Regular'
+                            bgctx.fillText(item.value.value, item.left, item.top - 98)
+                            // img = bgcanvas.toDataURL('image/jpg')
+                            console.log(top)
+                            ctx.drawImage(bgcanvas, 0, top, 375, 549, 0, 0, 375, 549)
+                        } else if (item.type == 3) {
+                            const preImg = ctx.getImageData(0, 0, 375, 599)
+                            ctx.drawImage(touch, item.left, item.top)
+                            if (list[index + 1].interval > 500) {
+                                setTimeout(() => {
+                                    ctx.putImageData(preImg, 0, 0)
+                                }, 500)
+                            }
+                        } else {
+                            top = item.top
+                            ctx.drawImage(bgcanvas, 0, item.top, 375, 549, 0, 0, 375, 549)
+                        }
+                        const no = item.interval / 20
+                        ctx.restore()
+                        for (let i = 0; i < no; i++) {
+                            video.add(ctx)
+                        }
+                    }, time)
+                    time += item.interval
+                })
+            })
+
+            $('.createVideo').click(e => {
+                e.preventDefault()
+                requestAnimationFrame(finalizeVideo)
+            })
             // next()
             // canvas.toDataURL('image/jpg').replace("image/png", "image/octet-stream")
             // var link = document.getElementById('link');
