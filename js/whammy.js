@@ -493,24 +493,46 @@ window.Whammy = (function(){
 		this.quality = quality || 0.8;
 	}
 
+
+	function addFrame (frame) {
+		return function () {
+			if(frame.canvas){ //CanvasRenderingContext2D
+				frame = frame.canvas;
+			}
+			if(frame.toDataURL){
+				frame = frame.toDataURL('image/webp', this.quality);
+			}else if(typeof frame != "string"){
+				throw "frame must be a a HTMLCanvasElement, a CanvasRenderingContext2D or a DataURI formatted string"
+			}
+			if (typeof frame === "string" && !(/^data:image\/webp;base64,/ig).test(frame)) {
+				throw "Input must be formatted properly as a base64 encoded DataURI of type image/webp";
+			}
+			return frame
+		}
+	}
+
 	WhammyVideo.prototype.add = function(frame, duration){
+		console.log('生成中')
 		if(typeof duration != 'undefined' && this.duration) throw "you can't pass a duration if the fps is set";
 		if(typeof duration == 'undefined' && !this.duration) throw "if you don't have the fps set, you need to have durations here.";
-		if(frame.canvas){ //CanvasRenderingContext2D
-			frame = frame.canvas;
-		}
-		if(frame.toDataURL){
-			// frame = frame.toDataURL('image/webp', this.quality);
-			// quickly store image data so we don't block cpu. encode in compile method.
-			frame = frame.getContext('2d').getImageData(0, 0, frame.width, frame.height);
-		}else if(typeof frame != "string"){
-			throw "frame must be a a HTMLCanvasElement, a CanvasRenderingContext2D or a DataURI formatted string"
-		}
-		if (typeof frame === "string" && !(/^data:image\/webp;base64,/ig).test(frame)) {
-			throw "Input must be formatted properly as a base64 encoded DataURI of type image/webp";
-		}
+		// let img
+		// let newframe
+		// if(frame.canvas){ //CanvasRenderingContext2D
+		// 	img = frame.canvas;
+		// }
+		// if(img.toDataURL){
+		// 	// frame = frame.toDataURL('image/webp', this.quality);
+		// 	// quickly store image data so we don't block cpu. encode in compile method.
+		// 	newframe = img.getContext('2d').getImageData(0, 0, img.width, img.height);
+		// }else if(typeof img != "string"){
+		// 	throw "frame must be a a HTMLCanvasElement, a CanvasRenderingContext2D or a DataURI formatted string"
+		// }
+		// if (typeof img === "string" && !(/^data:image\/webp;base64,/ig).test(img)) {
+		// 	throw "Input must be formatted properly as a base64 encoded DataURI of type image/webp";
+		// }
+		// console.log(addFrame(frame)())
 		this.frames.push({
-			image: frame,
+			image: addFrame(frame)(),
 			duration: duration || this.duration
 		});
 	};
