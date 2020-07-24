@@ -8,17 +8,21 @@
 </head>
 <body>
     <div class="content">
+        <!-- <canvas id="videocanvas" width="375"></canvas> -->
         <canvas id="canvas" width="375"></canvas>
-        <video id="awesome" width="375" height="599" controls autoplay loop></video>
-        <img src="/img/zhuzhai.jpg" alt="" id="img" style="width: 375px;">
-        <img src="/img/top.png" alt="" srcset="" id="top">
-        <img src="/img/bottom.png" alt="" id="bottom">
+        <video id="awesome" width="375" height="667" controls autoplay loop></video>
+        <img src="/img/zhuzhai.jpg" alt="" id="img">
+        <img src="/img/top.jpg" alt="" id="top" style="display:none">
+        <img src="/img/newtop.jpg" alt="" id="newtop" style="display:none">
+        <img src="/img/bottom.jpg" alt="" id="bottom" style="display:none">
         <img src="/img/click.png" alt="" id="touch">
         <img src="/img/baozhang.jpg" alt="" class="baozhang" id="baozhang">
         <img src="/img/tiaokuan.jpg" alt="" class="tiaokuan" id="tiaokuan">
         <img src="/img/xuzhi.jpg" alt="" class="xuzhi" id="xuzhi">
         <img src="/img/yinsi.jpg" alt="" class="yinsi" id="yinsi">
-        <img src="/img/newbottom.jpg" alt="" id="newbottom">
+        <img src="/img/newbottom.jpg" alt="" id="newbottom" style="display:none">
+        <img src="/img/bg.jpg" alt="" id="bg" style="display:none">
+        <img src="/img/mytop.jpg" alt="" id="mytop" style="display:none">
         <a id="link"></a>
         <button class="play">播放</button>
         <button class="createVideo">生成视频</button>
@@ -42,14 +46,14 @@
             width: 100%;
             height: 100vh;
         }
-        #img, #top, #bottom, #bgcanvas, .baozhang, .tiaokuan, .xuzhi, .yinsi {
+        #img, #bgcanvas, .baozhang, .tiaokuan, .xuzhi, .yinsi {
             display: none;
         }
     </style>
     <script>
         let ctxList = []
         $(() => {
-            let list = data1List()
+            let list = dataList()
             list.forEach((item, index) => {
                 if (index == 0) {
                     item.interval = 0
@@ -58,27 +62,27 @@
                 }
             })
             let time = 0
-            var video = new Whammy.Video(20);
+            var video = new Whammy.Video(25);
             const canvas = document.getElementById('canvas')
-            canvas.height = 599
+            canvas.height = 667
             const ctx = canvas.getContext('2d')
             const touch = document.getElementById('touch')
-            let img = document.getElementById('img')
+            const img = document.getElementById('img')
+            const top = document.getElementById('top')
             const bottom = document.getElementById('bottom')
             const newbottom = document.getElementById('newbottom')
-            ctx.drawImage(bottom, 0, 0, 375, 50, 0, 549, 375, 50)
-            ctx.drawImage(img, 0, 0, 375, 549, 0, 0, 375, 549)
+            const bg = document.getElementById('bg')
+            const mytop = document.getElementById('mytop')
+            const newtop = document.getElementById('newtop')
             const bgcanvas = document.getElementById('bgcanvas')
-            bgcanvas.height = 3014
+            bgcanvas.height = 3005
             const bgctx = bgcanvas.getContext('2d')
-            bgctx.drawImage(img, 0, 0, 375, 3014)
+            bgctx.drawImage(img, 0, 0, 375, 3005)
             const xuzhi = document.getElementById('xuzhi')
             const tiaokuan = document.getElementById('tiaokuan')
             const yinsi = document.getElementById('yinsi')
             const baozhang = document.getElementById('baozhang')
-            // // 须知画布
             let mycanvas = bgcanvas
-            // ctx.drawImage(touch, 155, 237)
 
 
             function finalizeVideo(){
@@ -92,52 +96,10 @@
                     document.getElementById('download').href = url;
                 })
             }
-
-            // $('.play').click(e => {
-            //     e.preventDefault()
-            //     list.forEach((item, index) => {
-            //         setTimeout(() => {
-            //             let h = 667 + item.top
-            //             if (item.type == 2) {
-            //                 bgctx.font = '14px SourceHanSansCN-Regular'
-            //                 bgctx.fillText(item.value.value, item.left, item.top - 15)
-            //                 ctx.drawImage(mycanvas, 0, top, 375, 549, 0, 0, 375, 549)
-            //             } else if (item.type == 3) {
-            //                 console.log(item)
-            //                 const preImg = ctx.getImageData(0, 0, 375, 599)
-            //                 ctx.drawImage(touch, item.left, item.top)
-            //                 if (list[index + 1].interval > 500) {
-            //                     setTimeout(() => {
-            //                         ctx.putImageData(preImg, 0, 0)
-            //                     }, 500)
-            //                 }
-            //             } else if (item.type == 4) {
-            //                 if (item.name == 'xuzhi') {
-            //                     mycanvas = xuzhi
-            //                 } else if (item.name == 'tiaokuan') {
-            //                     mycanvas = tiaokuan
-            //                 } else if (item.name == 'yinsi') {
-            //                     mycanvas = yinsi
-            //                 } else if (item.name == 'baozhang') {
-            //                     mycanvas = baozhang
-            //                 }
-            //                 ctx.drawImage(mycanvas, 0, item.top, 375, 524, 0, 32, 375, 524)
-            //             } else {
-            //                 top = item.top
-            //                 ctx.drawImage(mycanvas, 0, item.top, 375, 549, 0, 0, 375, 549)
-            //             }
-            //             const no = item.interval / 50
-            //             for (let i = 0; i < no; i++) {
-            //                 video.add(ctx)
-            //             }
-            //         }, time)
-            //         time += item.interval
-            //     })
-            // })
             function createVideos () {
-                let top = 0
                 let newTop = 0
                 let h = 549
+                let top = 0
                 const createVideo = function (index) {
                     const item = list[index]
                     if (item.type == 2) {
@@ -145,27 +107,35 @@
                         bgctx.fillText(item.value.value, item.left, item.top - 15)
                         ctx.drawImage(mycanvas, 0, top, 375, h, 0, newTop, 375, h)
                     } else if (item.type == 3) {
-                        ctx.drawImage(touch, item.left, item.top - 68)
+                        ctx.drawImage(touch, item.left, item.top)
                     } else if (item.type == 4) {
-                        if (item.name == 'xuzhi') {
-                            mycanvas = xuzhi
-                        } else if (item.name == 'tiaokuan') {
-                            mycanvas = tiaokuan
-                        } else if (item.name == 'yinsi') {
-                            mycanvas = yinsi
-                        } else if (item.name == 'baozhang') {
-                            mycanvas = baozhang
+                        if (item.name == 'zhuzhai') {
+                            h = 549
+                            newTop = 68
+                            mycanvas = bgcanvas
+                            ctx.drawImage(bg, 0, 0, 375, 667, 0, 0, 375, 667)
+                            ctx.drawImage(mycanvas, 0, item.top, 375, h, 0, newTop, 375, h)
+                        } else {
+                            h = 524
+                            newTop = 100
+                            if (item.name == 'xuzhi') {
+                                mycanvas = xuzhi
+                            } else if (item.name == 'tiaokuan') {
+                                mycanvas = tiaokuan
+                            } else if (item.name == 'yinsi') {
+                                mycanvas = yinsi
+                            } else if (item.name == 'baozhang') {
+                                mycanvas = baozhang
+                            }
+                            ctx.drawImage(newbottom, 0, 0, 375, 43, 0, 624, 375, 43)
+                            ctx.drawImage(newtop, 0, 0, 375, 100, 0, 0, 375, 100)
+                            ctx.drawImage(mycanvas, 0, item.top, 375, h, 0, newTop, 375, h)
                         }
-                        newTop = 32
-                        h = 524
-                        ctx.clearRect(0, 0, 375, 599)
-                        ctx.drawImage(mycanvas, 0, item.top, 375, h, 0, newTop, 375, h)
-                        ctx.drawImage(newbottom, 0, 0, 375, 43, 0, 556, 375, 43)
                     } else {
                         top = item.top
                         ctx.drawImage(mycanvas, 0, item.top, 375, h, 0, newTop, 375, h)
                     }
-                    const no = item.interval / 50
+                    const no = item.interval / 40
                     for (let i = 0; i < no; i++) {
                         video.add(ctx)
                     }
@@ -180,6 +150,55 @@
                 }.bind(this)
                 createVideo(0)
             }
+            // function createVideos () {
+            //     let newTop = 0
+            //     let h = 549
+            //     const createVideo = function (index) {
+            //         const item = list[index]
+            //         if (item.type == 2) {
+            //             bgctx.font = '14px SourceHanSansCN-Regular'
+            //             bgctx.fillText(item.value.value, item.left, item.top - 15)
+            //             ctx.drawImage(mycanvas, 0, top, 375, h, 0, newTop, 375, h)
+            //         } else if (item.type == 3) {
+            //             ctx.drawImage(touch, item.left, item.top)
+            //         } else if (item.type == 4) {
+            //             if (item.name == 'zhuzhai') {
+            //                 h = 549
+            //                 newTop = 68
+            //                 mycanvas = bgcanvas
+            //                 ctx.drawImage(bg, 0, 0, 375, 667, 0, 0, 375, 667)
+            //                 ctx.drawImage(mycanvas, 0, item.top, 375, h, 0, newTop, 375, h)
+            //             } else {
+            //                 h = 524
+            //                 newTop = 100
+            //                 if (item.name == 'xuzhi') {
+            //                     mycanvas = xuzhi
+            //                 } else if (item.name == 'tiaokuan') {
+            //                     mycanvas = tiaokuan
+            //                 } else if (item.name == 'yinsi') {
+            //                     mycanvas = yinsi
+            //                 } else if (item.name == 'baozhang') {
+            //                     mycanvas = baozhang
+            //                 }
+            //                 ctx.drawImage(newbottom, 0, 0, 375, 43, 0, 624, 375, 43)
+            //                 ctx.drawImage(newtop, 0, 0, 375, 100, 0, 0, 375, 100)
+            //                 ctx.drawImage(mycanvas, 0, item.top, 375, h, 0, newTop, 375, h)
+            //             }
+            //         } else {
+            //             ctx.drawImage(mycanvas, 0, item.top, 375, h, 0, newTop, 375, h)
+            //         }
+            //         video.add(ctx)
+            //         if (index < list.length - 1) {
+            //             setTimeout(() => {
+            //                 createVideo(index +1)
+            //             }, 1)
+            //         } else {
+            //             console.log('生成结束' + new Date())
+            //             requestAnimationFrame(finalizeVideo)
+            //         }
+            //     }.bind(this)
+            //     createVideo(0)
+            // }
 
 
             $('.play').click(e => {
@@ -192,12 +211,6 @@
                 e.preventDefault()
                 console.log(JSON.stringify(ctxList))
                 console.log(ctxList.length)
-                // ctxList.forEach((item, index) => {
-                //     video.add(item)
-                //     if (index == ctxList.length - 1) {
-                //         requestAnimationFrame(finalizeVideo)
-                //     }
-                // })
                 requestAnimationFrame(finalizeVideo)
             })
         })
