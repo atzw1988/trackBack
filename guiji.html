@@ -21,12 +21,16 @@
         <img src="/img/xuzhi.jpg" alt="" class="xuzhi" id="xuzhi">
         <img src="/img/yinsi.jpg" alt="" class="yinsi" id="yinsi">
         <img src="/img/newbottom.jpg" alt="" id="newbottom" style="display:none">
+        <img src="/img/oldbottom.jpg" alt="" id="oldbottom" style="display:none">
         <img src="/img/bg.jpg" alt="" id="bg" style="display:none">
         <img src="/img/mytop.jpg" alt="" id="mytop" style="display:none">
         <a id="link"></a>
         <button class="play">播放</button>
         <button class="createVideo">生成视频</button>
         <a style="display:none" id="download" download="clock.webm">Download video</a>
+        <div style="width: 375px;height: 667px; color: aqua;" id="demoDiv">
+
+        </div>
     </div>
     <canvas id="bgcanvas" width="375"></canvas>
 
@@ -53,7 +57,7 @@
     <script>
         let ctxList = []
         $(() => {
-            let list = dataList()
+            let list = data1List()
             list.forEach((item, index) => {
                 if (index == 0) {
                     item.interval = 0
@@ -71,6 +75,7 @@
             const top = document.getElementById('top')
             const bottom = document.getElementById('bottom')
             const newbottom = document.getElementById('newbottom')
+            const oldbottom = document.getElementById('oldbottom')
             const bg = document.getElementById('bg')
             const mytop = document.getElementById('mytop')
             const newtop = document.getElementById('newtop')
@@ -127,10 +132,12 @@
                             } else if (item.name == 'baozhang') {
                                 mycanvas = baozhang
                             }
-                            ctx.drawImage(newbottom, 0, 0, 375, 43, 0, 624, 375, 43)
+                            ctx.drawImage(oldbottom, 0, 0, 375, 43, 0, 624, 375, 43)
                             ctx.drawImage(newtop, 0, 0, 375, 100, 0, 0, 375, 100)
                             ctx.drawImage(mycanvas, 0, item.top, 375, h, 0, newTop, 375, h)
                         }
+                    } else if (item.type == 5) {
+                        ctx.drawImage(newbottom, 0, 0, 375, 43, 0, 624, 375, 43)
                     } else {
                         top = item.top
                         ctx.drawImage(mycanvas, 0, item.top, 375, h, 0, newTop, 375, h)

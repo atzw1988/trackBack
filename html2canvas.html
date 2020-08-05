@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.0/jquery.js"></script>
+    <link rel="stylesheet/less" href="css/index.less">
+    <script src="js/less.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="master"></div>
+    <div class="product" id="product">
+        <img src="img/click.png" class="touch" alt="">
+        <div id="box">
+        
+        </div>
+    </div>
+    
+    <video id="awesome" width="375" height="667" controls autoplay loop></video>
+    <a id="download" download="clock.webm">Download video</a>
+    <button class="create">生成</button>
+    <style lang="less">
+        
+    </style>
+    <script src="/js/html2canvas.js"></script>
+    <script src="/js/whammy.js"></script>
+    <script src="/js/data1.js"></script>
+    <script src="js/data0731.js"></script>
+    <script src="js/page1.js"></script>
+    <script src="js/page2.js"></script>
+    <script>
+        let count = 0
+        let timer = null
+        const box = $('#box')
+        const touch = $('.touch')
+        let select = null
+        $(() => {
+            let list = data1List()
+            // let list = list0731
+            list.forEach((item, index) => {
+                if (index == list.length -1) {
+                    item.interval = 0
+                } else {
+                    item.interval = list[index + 1].time - item.time
+                }
+            })
+
+            function test () {
+                let a = 1
+                return [a]
+            }
+
+            console.log(test())
+
+            const page1 = page1Html()
+            const page2 = page2Html()
+            const page3 = page3Html()
+            const page4 = page4Html()
+            box.html(page1)
+            const video = new Whammy.Video(25);
+            const product = document.querySelector('#product')
+            let savePage = null
+            let saveTop = null
+            function createFrame () {
+                return function () {
+                    html2canvas(product, {
+                        allowTaint: true,
+                        useCORS: true,
+                        backgroundColor: null,
+                        imageTimeout: null
+                    }).then(canvas => {
+                        video.add(canvas)
+                        canvas = null
+                    })
+                }()
+            }
+            
+            function finalizeVideo(){
+                let start_time = +new Date;
+                video.compile(false, function(output){         
+                    let end_time = +new Date;
+                    const url = URL.createObjectURL(output); 
+                    console.log("url:"+url);
+                    document.getElementById('awesome').src = url
+                    document.getElementById('download').style.display = '';
+                    document.getElementById('download').href = url;
+                })
+            }
+
+            // 模拟点击
+            function createClick (left, top) {
+                touch.css({left: left + 'px', top: top + 'px'})
+                touch.show()
+                setTimeout(() => {
+                    touch.hide()
+                }, 500)
+            }
+
+            let time = 0
+            function createVideos () {
+                const createVideo = function (index) {
+                    const item = list[index]
+                    if (item.type == 1) {
+                        select.scrollTop(item.top)
+                    } else if (item.type == 2) {
+                        console.log(item.value)
+                        $(`.${item.params}`).val(item.value)
+                    } else if (item.type == 5) {
+                        console.log(item.value)
+                        $(`.${item.params}`).html(item.value)
+                    } else if (item.type == 6) {
+                        console.log(item.target)
+                        item.show? $(`.${item.target}`).show() : $(`.${item.target}`).hide()
+                    } else if (item.type == 4) {
+                        if (item.name == 'xuzhi') {
+                            savePage = document.querySelector('#pages')
+                            saveTop = list[index - 1].top
+                            box.html(page2)
+                            select = $('.xuzhiC')
+                        } else if (item.name == 'tiaokuan') {
+                            box.html(page3)
+                            select = $('.tiaokuanC')
+                        } else if (item.name == 'yinsi') {
+                            box.html(page4)
+                            select = $('.yinsiC')
+                        } else if (item.name == 'zhuzhai') {
+                            if (savePage) {
+                                box.html(savePage)
+                                $('.content').scrollTop(saveTop)
+                            } else {
+                                box.html(page1)
+                            }
+                            select = $('.content')
+                        }
+                    } else if (item.type == 7) {
+                        $('.oldbottom').hide()
+                        $('.newbottom').show()
+                    } else if (item.type == 3) {
+                        createClick(item.left, item.top)
+                    }
+                    if (index < list.length - 1) {
+                        setTimeout(() => {
+                            createVideo(index +1)
+                        }, item.interval * 10)
+                    } else {
+                        console.log('生成结束' + new Date())
+                        clearInterval(timer)
+                        requestAnimationFrame(finalizeVideo)
+                    }
+                }.bind(this)
+                createVideo(0)
+            }
+            
+            $('.create').click(e => {
+                e.preventDefault()
+                createVideos()
+                timer = setInterval(() => {
+                    createFrame()
+                }, 400)
+            })
+        })
+    </script>
+</body>
+</html>
