@@ -51,10 +51,6 @@
             <div class="formTitle">填写保单信息</div>
             <div class="formContent">
               <div class="form">
-                <div class="title">
-                  <div class="no">1</div>
-                  <div>本人信息（投保人）</div>
-                </div>
                 <div class="formList">
                   <div class="left">姓名</div>
                   <div class="right">{{selfName}}</div>
@@ -119,11 +115,16 @@
                       <div class="right">{{elsePhone || '请输入手机号码'}}</div>
                     </div>
                   </template>
-                  <div class="formList picker addperson">
-                    <div class="left">保费</div>
-                    <div class="right">
-                      <span class="price">{{total}}</span>元
-                    </div>
+                </div>
+                <div class="title unit">
+                  <div class="left">
+                    <div class="no">3</div>
+                    <div>投保分数</div>
+                  </div>
+                  <div class="right">
+                    <div class="sup">-</div>
+                    <div class="num">{{unit}}</div>
+                    <div class="add">+</div>
                   </div>
                 </div>
               </div>
@@ -143,8 +144,8 @@
               <span>元/年</span>
             </div>
             <div class="price" v-else>
-              <span class="num">162</span>
-              <span>元/年起</span>
+              <span class="num">88</span>
+              <span>元/年</span>
             </div>
             <div class="share">分享</div>
           </div>
@@ -154,121 +155,21 @@
     </div>
     <div class="mask"></div>
     <video id="awesome" width="375" height="667" controls autoplay loop></video>
-    <button @click="begin">开始</button>
+    <track-button @click="begin" :loading="loading"></track-button>
   </div>
 </template>
 
 <script>
-import { get } from '@/utils/jutils.js'
-import html2canvas from 'html2canvas'
-import Whammy from 'whammy'
-import { setTimeout } from 'timers'
+import { replay } from '@/mixin/replay.js'
 export default {
-  name: 'home',
+  name: 'jiaotong',
+  mixins: [replay],
   data () {
     return {
-      pageTitle: '幸福e家·百万医疗保险(升级版)',
-      selfName: '边云',
-      selfCardType: '身份证',
-      selfCardNo: '130184197911244529',
-      selfSex: '女',
-      selfBirth: '1979-11-24',
-      selfPhone: '18566688104',
-      relation: '本人',
-      elseName: '',
-      elseCardType: '身份证',
-      elseCardNo: '',
-      elseSex: '',
-      elseBirth: '',
-      elsePhone: '',
-      total: 0,
-      readFlag: false,
-      video: null,
-      list: [],
-      pages: null,
-      saveCanvas: null,
-      timer: null,
-      question0: false,
-      question1: false,
-      question2: false,
-      select: null,
-      premium: 0,
-      totalMoney: 0,
-      plan: '计划一'
+      pageTitle: '交通守护·意外伤害保险',
+      plan: '计划一',
+      relation: '本人'
     }
-  },
-  methods: {
-    finalizeVideo () {
-      const output = this.video.compile(false)
-      console.log(output)
-      const url = URL.createObjectURL(output)
-      document.getElementById('awesome').src = url
-    },
-    createFrame () {
-      html2canvas(this.$refs.pages, {
-        allowTaint: true,
-        useCORS: true,
-        backgroundColor: null,
-        imageTimeout: 0,
-        removeContainer: true,
-        foreignObjectRendering: false
-      }).then(canvas => {
-        this.video.add(canvas)
-        this.saveCanvas = canvas
-      })
-      this.h2c = null
-    },
-    createSaveFrame () {
-      this.video.add(this.saveCanvas)
-    },
-    createVideos () {
-      const createVideo = (index) => {
-        clearInterval(this.timer)
-        const item = this.list[index]
-        if (item.type === 1) {
-          this.select.scrollTop = item.top
-        } else if (item.type === 2 || item.type === 9 || item.type === 5) {
-          if (item.numbers) {
-            this.personList[item.numbers][item.inputParam] = item.inputValue
-          } else {
-            this[item.inputParam] = item.inputValue
-          }
-        } else if (item.type === 6) {
-          this[item.inputParam] = item.isShow === 'true'
-        } else if (item.type === 8) {
-          this.personList.push(this.personItem)
-        }
-        this.createFrame()
-        this.timer = setInterval(() => {
-          this.createSaveFrame()
-        }, 200)
-        if (index < this.list.length - 1) {
-          setTimeout(() => {
-            createVideo(index + 1)
-          }, item.time * 5)
-        } else {
-          console.log('生成结束' + new Date())
-          clearInterval(this.timer)
-          window.requestAnimationFrame(this.finalizeVideo)
-        }
-      }
-      createVideo(1)
-    },
-    begin () {
-      this.select = this.$refs.page
-      this.createVideos()
-    },
-    console (index) {
-      setTimeout(() => {
-        console.log(index)
-      }, 1000)
-    }
-  },
-  mounted () {
-    get(1906, (list) => {
-      this.list = list
-    })
-    this.video = new Whammy.Video(25)
   }
 }
 </script>
@@ -492,7 +393,37 @@ export default {
       }
     }
     .other {
-      padding-bottom: 20px;
+      padding-bottom: 10px;
+    }
+    .unit {
+      padding-bottom: 10px;
+      justify-content: space-between;
+      .left {
+        display: flex;
+      }
+      .right {
+        display: flex;
+        align-items: center;
+        font-weight: normal;
+        text-align: center;
+        line-height: 25px;
+        .sup, .add {
+          width: 25px;
+          height: 25px;
+          border: 1px solid #eee;
+        }
+        .sup {
+          border-radius: 5px 0 0 5px;
+        }
+        .add {
+          border-radius: 0 5px 5px 0;
+        }
+        .num {
+          width: 35px;
+          height: 25px;
+          border: 1px solid #eee;
+        }
+      }
     }
   }
 </style>

@@ -6,20 +6,53 @@ import { get } from '@/utils/jutils.js'
 const replay = {
     data () {
         return {
+            maxSHow: 5,
+            selfName: '边云',
+            selfCardType: '身份证',
+            selfCardNo: '130184197911244529',
+            selfSex: '女',
+            selfBirth: '1979-11-24',
+            selfPhone: '18566688104',
+            socialSecurity: 1,
+            elseName: '',
+            elseCardType: '身份证',
+            elseCardNo: '',
+            elseSex: '',
+            elseBirth: '',
+            elsePhone: '',
+            destination: '',
+            limitTimeValue: '',
+            effectTime: '',
+            overdueTime: '',
+            total: 0,
+            readFlag: false,
             video: null,
-            enble: false,
-            loading: false,
-            list: []
+            list: [],
+            pages: null,
+            saveCanvas: null,
+            timer: null,
+            question0: false,
+            question1: false,
+            question2: false,
+            question3: false,
+            question4: false,
+            question5: false,
+            select: null,
+            premium: 0,
+            totalMoney: 0,
+            moreText: '更多保障详情',
+            showMore: false,
+            unit: 1,
+            loading: false
         }
     },
     methods: {
         finalizeVideo () {
-            setTimeout(() => {
-                const output = this.video.compile(false)
-                const url = URL.createObjectURL(output)
-                document.getElementById('awesome').src = url
-                this.loading = false
-            }, 2000)
+            const output = this.video.compile(false)
+            console.log(output)
+            const url = URL.createObjectURL(output)
+            document.getElementById('awesome').src = url
+            this.loading = false
         },
         createFrame () {
             html2canvas(this.$refs.pages, {
@@ -43,8 +76,9 @@ const replay = {
                 const item = this.list[index]
                 if (item.type === 1) {
                     this.select.scrollTop = item.top
+                } else if (item.type === 2 || item.type === 9 || item.type === 5) {
+                    this[item.inputParam] = item.inputValue
                 } else if (item.type === 6) {
-                    console.log(item)
                     this[item.inputParam] = item.isShow === 'true'
                 }
                 this.createFrame()
@@ -56,6 +90,7 @@ const replay = {
                         createVideo(index + 1)
                     }, item.time * 5)
                 } else {
+                    console.log('生成结束' + new Date())
                     clearInterval(this.timer)
                     window.requestAnimationFrame(this.finalizeVideo)
                 }
@@ -64,16 +99,17 @@ const replay = {
         },
         begin () {
             this.loading = true
-            this.select = this.$refs.need
+            this.select = this.$refs.page
             this.createVideos()
         }
     },
     mounted () {
+        this.video = new Whammy.Video(25)
+        this.createFrame()
         const query = this.$route.query
         get(query.id, (list) => {
             this.list = list
-          })
-        this.video = new Whammy.Video(25)
+        })
     }
 }
 

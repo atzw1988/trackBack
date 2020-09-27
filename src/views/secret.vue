@@ -31,25 +31,14 @@
         </div>
         <div class="mask"></div>
         <video id="awesome" width="375" height="667" controls autoplay loop></video>
-        <button @click="begin">开始</button>
+        <track-button @click="begin" :loading="loading"></track-button>
     </div>
 </template>
 
 <script>
-import { get } from '@/utils/jutils.js'
 import { replay } from '@/mixin/mixin.js'
 export default {
-    mixins: [replay],
-    data () {
-        return {
-            list: []
-        }
-    },
-    mounted () {
-        get(1904, (list) => {
-            this.list = list
-        })
-    }
+    mixins: [replay]
 }
 </script>
 

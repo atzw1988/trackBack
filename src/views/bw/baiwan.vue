@@ -5,7 +5,7 @@
       <div class="box">
         <div class="pageTitle">{{pageTitle}}</div>
         <div class="page" ref="page">
-          <div class="test" :style="{top:pageTop + 'px'}">
+          <div class="test">
             <img src="../../assets/baiwan/banner.png" mode="widthFix">
             <img src="../../assets/baiwan/plan.png" mode="widthFix" alt="">
             <img class="serve" src="../../assets/baiwan/serve.png" mode="widthFix">
@@ -169,7 +169,7 @@
     </div>
     <div class="mask"></div>
     <video id="awesome" width="375" height="667" controls autoplay loop></video>
-    <button @click="begin">开始</button>
+    <track-button @click="begin" :loading="loading"></track-button>
   </div>
 </template>
 
@@ -179,24 +179,10 @@ import html2canvas from 'html2canvas'
 import Whammy from 'whammy'
 import { setTimeout } from 'timers'
 export default {
-  name: 'home',
+  name: 'baiwan',
   data () {
     return {
       pageTitle: '幸福e家·百万医疗保险(升级版)',
-      questionList: [
-        {
-          title: '有了医保，还需要购买百万医疗险吗?',
-          text: '很有必要。目前治疗重疾的费用从几十万到几百万不等，一般医保只能覆盖治疗费用约65%，且治疗重疾所需的自费项目（伽马刀、质子治疗）等往往又是医保所不覆盖的。而幸福e家百万医疗没有这些限制，不仅可以涵盖，是对医保最好地商业保险补充。'
-        },
-        {
-          title: '我还年轻有必要购买幸福e家百万医疗保险吗?',
-          text: '青壮年时期生理机能处于最佳状态，得病的可能性相对较低，但也会面临意外风险；当步入中老年后，身体机能会急剧下降，患病几率增大，但那时的健康状况将不再符合投保条件。因此健康险还是要趁早买，一方面防范于未然，另一方面还能获得连续续保的资格，获得长期保障哦。'
-        },
-        {
-          title: '怎么样才能投保家庭版？与个人版有何区别？',
-          text: '与个人版相比，保障内容不变，但家庭投保享受更保费折扣，2人投保9.5折，3-7人投保保费享受9折优惠。若投保家庭版，被保险人人数为2人及以上，是投保人本人，或与投保人有保险利益的父母、配偶、子女以及配偶父母,但不允许隔代投保。'
-        }
-      ],
       selfName: '边云',
       selfCardType: '身份证',
       selfCardNo: '130184197911244529',
@@ -229,7 +215,6 @@ export default {
         total: 0
       },
       readFlag: false,
-      html2canvas: null,
       video: null,
       list: [],
       pages: null,
@@ -239,9 +224,9 @@ export default {
       question1: false,
       question2: false,
       select: null,
-      pageTop: 0,
       premium: 0,
-      totalMoney: 0
+      totalMoney: 0,
+      loading: false
     }
   },
   methods: {
@@ -250,6 +235,7 @@ export default {
       console.log(output)
       const url = URL.createObjectURL(output)
       document.getElementById('awesome').src = url
+      this.loading = false
     },
     createFrame () {
       html2canvas(this.$refs.pages, {
@@ -263,7 +249,6 @@ export default {
         this.video.add(canvas)
         this.saveCanvas = canvas
       })
-      this.h2c = null
     },
     createSaveFrame () {
       this.video.add(this.saveCanvas)
@@ -302,17 +287,14 @@ export default {
       createVideo(1)
     },
     begin () {
+      this.loading = true
       this.select = this.$refs.page
       this.createVideos()
-    },
-    console (index) {
-      setTimeout(() => {
-        console.log(index)
-      }, 1000)
     }
   },
   mounted () {
-    get(1906, (list) => {
+    const query = this.$route.query
+    get(query.id, (list) => {
       this.list = list
     })
     this.video = new Whammy.Video(25)
@@ -362,11 +344,6 @@ export default {
           height: calc(100% - 94px);
           overflow-y: auto;
           position: relative;
-          .test {
-            position: absolute;
-            left: 0;
-            top: -50px;
-          }
           img {
             width: 100%;
             display: block;

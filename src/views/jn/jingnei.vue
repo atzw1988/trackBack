@@ -5,11 +5,27 @@
       <div class="box">
         <div class="pageTitle">{{pageTitle}}</div>
         <div class="page" ref="page">
-          <div class="test" :style="{top:pageTop + 'px'}">
-            <img src="../../assets/baiwan/banner.png" mode="widthFix">
-            <img src="../../assets/baiwan/plan.png" mode="widthFix" alt="">
-            <img class="serve" src="../../assets/baiwan/serve.png" mode="widthFix">
-            <img src="../../assets/baiwan/price.png" mode="widthFix">
+          <div class="test">
+            <img src="../../assets/jingnei/banner.png" mode="widthFix">
+            <div class="plan">
+              <div class="planTitle">
+                <div class="left">保障计划</div>
+                <div class="right">查看详情</div>
+              </div>
+              <div class="planList">
+                <div class="item" :class="{active: planOne}">基础版</div>
+                <div class="item" :class="{active: !planOne}">升级版</div>
+              </div>
+              <template v-for="(item, index) in planList">
+                <div class="detailList" :key="index" v-if="index < maxSHow">
+                  <div class="left">{{item.title}}</div>
+                  <div class="right">{{planOne? item.planOne : item.planTwo}}</div>
+                </div>
+              </template>
+              <div class="more">
+                <div class="showMore">{{moreText}}</div>
+              </div>
+            </div>
             <div class="list">
               <div class="tab">
                 <div class="tabItem">产品特色</div>
@@ -17,38 +33,49 @@
                 <div class="tabItem">我要投保</div>
               </div>
               <div class="imgList">
-                <img src="../../assets/baiwan/p1.png" mode="widthFix">
-                <img src="../../assets/baiwan/p2.png" mode="widthFix">
-                <img src="../../assets/baiwan/p3.png" mode="widthFix">
-                <img src="../../assets/baiwan/p4.png" mode="widthFix">
-                <img src="../../assets/baiwan/p5.png" mode="widthFix">
-                <img src="../../assets/baiwan/p6.png" mode="widthFix">
+                <img src="../../assets/jingnei/product3.png" mode="widthFix">
+                <img src="../../assets/jingnei/product1.png" mode="widthFix">
+                <img src="../../assets/jingnei/product2.png" mode="widthFix">
               </div>
             </div>
             <div class="liucheng">
-              <img src="../../assets/baiwan/lipei.png">
+              <img src="../../assets/jingnei/lipei.png">
               <div class="question">
                 <div class="title">常见问题</div>
                 <div class="item">
                   <div class="left">
                     <div class="icon">Q</div>
-                    <div>有了医保，还需要购买百万医疗险吗?</div>
+                    <div>境内是怎么定义的？</div>
                   </div>
-                  <div v-if="question0" class="text">很有必要。目前治疗重疾的费用从几十万到几百万不等，一般医保只能覆盖治疗费用约65%，且治疗重疾所需的自费项目（伽马刀、质子治疗）等往往又是医保所不覆盖的。而幸福e家百万医疗没有这些限制，不仅可以涵盖，是对医保最好地商业保险补充。</div>
+                  <div v-if="question0" class="text">A：境内是指中国大陆地区范围内，该地区不包括台湾、香港、澳门地区。</div>
                 </div>
                 <div class="item">
                   <div class="left">
                     <div class="icon">Q</div>
-                    <div>我还年轻有必要购买幸福e家百万医疗保险吗?</div>
+                    <div>托运行李丢失索赔需提供什么资料？</div>
                   </div>
-                  <div v-if="question1" class="text">青壮年时期生理机能处于最佳状态，得病的可能性相对较低，但也会面临意外风险；当步入中老年后，身体机能会急剧下降，患病几率增大，但那时的健康状况将不再符合投保条件。因此健康险还是要趁早买，一方面防范于未然，另一方面还能获得连续续保的资格，获得长期保障哦。</div>
+                  <div v-if="question1" class="text">(一)保险单正本或其它保险凭证；(二)被保险人身份证明；(三)财物损失清单和购买发票；(四)航空公司出具的书面证明文件；(五)被保险人境内旅行的证明，如旅游费用收据、机票或车船票；(六)保险金申请人所能提供的与确认保险事故的性质、原因、损失程度等有关的其他证明和资料。</div>
                 </div>
                 <div class="item">
                   <div class="left">
                     <div class="icon">Q</div>
-                    <div>怎么样才能投保家庭版？与个人版有何区别？</div>
+                    <div>什么是急性疾病？</div>
                   </div>
-                  <div v-if="question2" class="text">与个人版相比，保障内容不变，但家庭投保享受更保费折扣，2人投保9.5折，3-7人投保保费享受9折优惠。若投保家庭版，被保险人人数为2人及以上，是投保人本人，或与投保人有保险利益的父母、配偶、子女以及配偶父母,但不允许隔代投保。</div>
+                  <div v-if="question2" class="text">A：是指被保险人在境内旅行期间发生以下的疾病或症状，且该疾病或症状不在原因除外范围内：(1)高热（成人达到38.5摄氏度或以上，小儿达到39摄氏度或以上）；(2)急性阑尾炎或剧烈呕吐或严重腹泻；(3)休克或昏迷；(4)高原反应；(5)癫痫发作；(6)严重喘息或呼吸困难；(7)急性心肌梗塞或心力衰竭或严重心律失常；(8)高血压危象、高血压脑病、脑血管意外；(9)非因意外伤害所导致的出血；(10)急性尿潴留；(11)食物中毒；(12)非因意外伤害所导致的、突发性的眼睛红肿、疼痛或视力障碍。</div>
+                </div>
+                <div class="item">
+                  <div class="left">
+                    <div class="icon">Q</div>
+                    <div>旅游意外医疗如何理赔？</div>
+                  </div>
+                  <div v-if="question3" class="text">A：在旅行期间因意外事故或突发急性病到医院就医产生的医疗费用，请拨打4008-817-518转告诉富邦财产保险的客服人员您需要理赔，我们的客服会指导您将所需资料进行影像资料上传。</div>
+                </div>
+                <div class="item">
+                  <div class="left">
+                    <div class="icon">Q</div>
+                    <div>如果需要更改出游天数该怎么处理？</div>
+                  </div>
+                  <div v-if="question4" class="text">A：请拨打富邦财险4008-817-518服务专线，会有专人指引您进行线下操作。</div>
                 </div>
               </div>
             </div>
@@ -85,61 +112,66 @@
                 </div>
                 <div class="title">
                   <div class="no">2</div>
-                  <div>保险种类</div>
-                </div>
-                <div class="kindlist">
-                  <div class="list" :class="{select: insuranceType == 0}">个人版</div>
-                  <div class="list" :class="{select: insuranceType == 1}">家庭版2-7人</div>
-                </div>
-                <div class="title">
-                  <div class="no">3</div>
                   <div>为谁投保（被保险人）</div>
                 </div>
-                <div class="other" v-for="(item, index) in personList" :key="index">
-                  <div class="title">被保险人{{index + 1}}</div>
-                    <div class="kindlist">
-                      <div class="list" :class="{select: item.socialSecurity == 1}">有社保(含新农村)</div>
-                      <div class="list" :class="{select: item.socialSecurity == 0}">无社保</div>
+                <div class="other">
+                  <div class="titleList">被保险人</div>
+                    <div class="formList picker">
+                      <div class="left">投保计划</div>
+                      <div class="right">{{plan}}</div>
                     </div>
                     <div class="formList picker">
                       <div class="left">关系</div>
-                      <div class="right">{{item.relation}}</div>
+                      <div class="right">{{relation}}</div>
                     </div>
-                    <template v-if="item.relation != '本人'">
+                    <template v-if="relation != '本人'">
                       <div class="formList">
                       <div class="left">姓名</div>
-                      <div class="right">{{item.elseName || '请输入被保人中文姓名'}}</div>
+                      <div class="right">{{elseName || '请输入被保人中文姓名'}}</div>
                     </div>
                     <div class="formList picker">
                       <div class="left">证件类型</div>
-                      <div class="right">{{item.elseCardType}}</div>
+                      <div class="right">{{elseCardType}}</div>
                     </div>
                     <div class="formList">
                       <div class="left">证件号码</div>
-                      <div class="right">{{item.elseCardNo || '请输入证件号码'}}</div>
+                      <div class="right">{{elseCardNo || '请输入证件号码'}}</div>
                     </div>
-                    <div class="formList picker" v-if="item.elseCardType != '身份证'">
+                    <div class="formList picker" v-if="elseCardType != '身份证'">
                       <div class="left">性别</div>
-                      <div class="right">{{item.elseSex}}</div>
+                      <div class="right">{{elseSex}}</div>
                     </div>
-                    <div class="formList picker" v-if="item.elseCardType != '身份证'">
+                    <div class="formList picker" v-if="elseCardType != '身份证'">
                       <div class="left">出生日期</div>
-                      <div class="right">{{item.elseBirth || '请选择出生日期'}}</div>
+                      <div class="right">{{elseBirth || '请选择出生日期'}}</div>
                     </div>
                     <div class="formList">
                       <div class="left">手机号</div>
-                      <div class="right">{{item.elsePhone || '请输入手机号码'}}</div>
+                      <div class="right">{{elsePhone || '请输入手机号码'}}</div>
+                    </div>
+                    <div class="formList">
+                      <div class="left">旅游目的地</div>
+                      <div class="right">{{destination || '请选择旅游目的地'}}</div>
+                    </div>
+                    <div class="formList picker">
+                      <div class="left">保障期限</div>
+                      <div class="right">{{limitTimeValue || '请选择保障期限'}}</div>
+                    </div>
+                    <div class="formList picker">
+                      <div class="left">保单生效日期</div>
+                      <div class="right">{{effectTime || '请选择保单生效日期'}}</div>
+                    </div>
+                    <div class="formList picker">
+                      <div class="left">保单终止日期</div>
+                      <div class="right">{{overdueTime}}</div>
                     </div>
                   </template>
                   <div class="formList picker addperson">
                     <div class="left">保费</div>
                     <div class="right">
-                      <span class="price">{{item.total}}</span>元
+                      <span class="price">{{total}}</span>元
                     </div>
                   </div>
-                </div>
-                <div class="kindlist" v-if="insuranceType == 1">
-                  <div class="list select">新增被保人</div>
                 </div>
               </div>
             </div>
@@ -147,7 +179,7 @@
               <van-checkbox class="checkBox" icon-size="14px" shape="square" v-model="readFlag">
                 我已确认
               </van-checkbox>
-              <span class="lists">《投保须知》《保险条款》《投保声明》《免责事项》《隐私协议》《高危职业表》</span>
+              <span class="lists">《投保须知》《保险条款》《投保声明》《免责事项》《隐私协议》</span>
             </div>
           </div>
         </div>
@@ -158,7 +190,7 @@
               <span>元/年</span>
             </div>
             <div class="price" v-else>
-              <span class="num">162</span>
+              <span class="num">8</span>
               <span>元/年起</span>
             </div>
             <div class="share">分享</div>
@@ -169,153 +201,124 @@
     </div>
     <div class="mask"></div>
     <video id="awesome" width="375" height="667" controls autoplay loop></video>
-    <button @click="begin">开始</button>
+    <track-button @click="begin" :loading="loading"></track-button>
   </div>
 </template>
 
 <script>
-import { get } from '@/utils/jutils.js'
-import html2canvas from 'html2canvas'
-import Whammy from 'whammy'
-import { setTimeout } from 'timers'
+import { replay } from '@/mixin/replay.js'
 export default {
-  name: 'home',
+  name: 'jingnei',
+  mixins: [replay],
   data () {
     return {
-      pageTitle: '幸福e家·百万医疗保险(升级版)',
-      questionList: [
+      pageTitle: 'FUN心游境内旅平险',
+      planLists: [
         {
-          title: '有了医保，还需要购买百万医疗险吗?',
-          text: '很有必要。目前治疗重疾的费用从几十万到几百万不等，一般医保只能覆盖治疗费用约65%，且治疗重疾所需的自费项目（伽马刀、质子治疗）等往往又是医保所不覆盖的。而幸福e家百万医疗没有这些限制，不仅可以涵盖，是对医保最好地商业保险补充。'
+            title: '旅行意外身故或伤残',
+            planOne: '30万',
+            planTwo: '50万'
         },
         {
-          title: '我还年轻有必要购买幸福e家百万医疗保险吗?',
-          text: '青壮年时期生理机能处于最佳状态，得病的可能性相对较低，但也会面临意外风险；当步入中老年后，身体机能会急剧下降，患病几率增大，但那时的健康状况将不再符合投保条件。因此健康险还是要趁早买，一方面防范于未然，另一方面还能获得连续续保的资格，获得长期保障哦。'
+            title: '公共交通工具意外身故或伤残',
+            planOne: '30万',
+            planTwo: '50万'
         },
         {
-          title: '怎么样才能投保家庭版？与个人版有何区别？',
-          text: '与个人版相比，保障内容不变，但家庭投保享受更保费折扣，2人投保9.5折，3-7人投保保费享受9折优惠。若投保家庭版，被保险人人数为2人及以上，是投保人本人，或与投保人有保险利益的父母、配偶、子女以及配偶父母,但不允许隔代投保。'
-        }
-      ],
-      selfName: '边云',
-      selfCardType: '身份证',
-      selfCardNo: '130184197911244529',
-      selfSex: '女',
-      selfBirth: '1979-11-24',
-      selfPhone: '18566688104',
-      insuranceType: 0,
-      personList: [
+            title: '高风险运动意外身故或伤残',
+            planOne: '',
+            planTwo: '6万'
+        },
         {
-          socialSecurity: 1,
-          relation: '配偶',
-          elseName: '',
-          elseCardType: '身份证',
-          elseCardNo: '',
-          elseSex: '',
-          elseBirth: '',
-          elsePhone: '',
-          total: 0
+            title: '急性病导致身故',
+            planOne: '',
+            planTwo: '5万'
+        },
+        {
+            title: '意外伤害医疗保险金',
+            planOne: '2万',
+            planTwo: '3万'
+        },
+        {
+            title: '急性疾病医疗保险金',
+            planOne: '1万',
+            planTwo: '2万'
+        },
+        {
+            title: '意外伤害住院日额补贴保险金',
+            planOne: '',
+            planTwo: '100元/天'
+        },
+        {
+            title: '紧急医疗运送和送返',
+            planOne: '',
+            planTwo: '20万'
+        },
+        {
+            title: '遗体或遗骨运送回居住地或就地安葬费用',
+            planOne: '',
+            planTwo: '10万'
+        },
+        {
+            title: '亲属前往处理后事补偿',
+            planOne: '',
+            planTwo: '6500元'
+        },
+        {
+            title: '航班延误保险金',
+            planOne: '300元',
+            planTwo: '600元'
+        },
+        {
+            title: '航空托运行李丢失保险金',
+            planOne: '3000元',
+            planTwo: '4000元'
+        },
+        {
+            title: '个人责任保险金',
+            planOne: '20万',
+            planTwo: '50万'
+        },
+        {
+            title: '投保年龄',
+            planOne: '1-70周岁',
+            planTwo: '1-70周岁'
+        },
+        {
+            title: '保障期限',
+            planOne: '1～90天',
+            planTwo: '1～90天'
         }
       ],
-      personItem: {
-        socialSecurity: 1,
-        relation: '配偶',
-        elseName: '',
-        elseCardType: '身份证',
-        elseCardNo: '',
-        elseSex: '',
-        elseBirth: '',
-        elsePhone: '',
-        total: 0
-      },
-      readFlag: false,
-      html2canvas: null,
-      video: null,
-      list: [],
-      pages: null,
-      saveCanvas: null,
-      timer: null,
-      question0: false,
-      question1: false,
-      question2: false,
-      select: null,
-      pageTop: 0,
-      premium: 0,
-      totalMoney: 0
+      plan: '基础版',
+      relation: '配偶'
     }
   },
-  methods: {
-    finalizeVideo () {
-      const output = this.video.compile(false)
-      console.log(output)
-      const url = URL.createObjectURL(output)
-      document.getElementById('awesome').src = url
-    },
-    createFrame () {
-      html2canvas(this.$refs.pages, {
-        allowTaint: true,
-        useCORS: true,
-        backgroundColor: null,
-        imageTimeout: 0,
-        removeContainer: true,
-        foreignObjectRendering: false
-      }).then(canvas => {
-        this.video.add(canvas)
-        this.saveCanvas = canvas
-      })
-      this.h2c = null
-    },
-    createSaveFrame () {
-      this.video.add(this.saveCanvas)
-    },
-    createVideos () {
-      const createVideo = (index) => {
-        clearInterval(this.timer)
-        const item = this.list[index]
-        if (item.type === 1) {
-          this.select.scrollTop = item.top
-        } else if (item.type === 2 || item.type === 9 || item.type === 5) {
-          if (item.numbers) {
-            this.personList[item.numbers][item.inputParam] = item.inputValue
-          } else {
-            this[item.inputParam] = item.inputValue
-          }
-        } else if (item.type === 6) {
-          this[item.inputParam] = item.isShow === 'true'
-        } else if (item.type === 8) {
-          this.personList.push(this.personItem)
-        }
-        this.createFrame()
-        this.timer = setInterval(() => {
-          this.createSaveFrame()
-        }, 200)
-        if (index < this.list.length - 1) {
-          setTimeout(() => {
-            createVideo(index + 1)
-          }, item.time * 5)
-        } else {
-          console.log('生成结束' + new Date())
-          clearInterval(this.timer)
-          window.requestAnimationFrame(this.finalizeVideo)
-        }
+  watch: {
+    showMore (newVal) {
+      if (newVal) {
+        this.maxSHow = 100
+        this.moreText = '收起保障详情'
+      } else {
+        this.maxSHow = 5
+        this.moreText = '更多保障详情'
       }
-      createVideo(1)
-    },
-    begin () {
-      this.select = this.$refs.page
-      this.createVideos()
-    },
-    console (index) {
-      setTimeout(() => {
-        console.log(index)
-      }, 1000)
     }
   },
-  mounted () {
-    get(1906, (list) => {
-      this.list = list
-    })
-    this.video = new Whammy.Video(25)
+  computed: {
+    planOne () {
+      return this.plan === '基础版'
+    },
+    planList () {
+      const list = this.planLists.filter(item => {
+        if (this.plan === '基础版') {
+          return item.planOne
+        } else {
+          return item
+        }
+      })
+      return list
+    }
   }
 }
 </script>
@@ -362,21 +365,59 @@ export default {
           height: calc(100% - 94px);
           overflow-y: auto;
           position: relative;
-          .test {
-            position: absolute;
-            left: 0;
-            top: -50px;
+          .plan {
+            background-color: #ffffff;
+            padding: 0 24px;
+            .planTitle, .planList, .detailList {
+              display: flex;
+              justify-content: space-between;
+              align-items: center
+            }
+            .planTitle {
+              height: 52px;
+              font-size: 16px;
+              .left {
+                font-weight: bold;
+              }
+              .right {
+                color: #007bd9;
+              }
+            }
+            .planList {
+              padding: 13px 13px 9px;
+              .item {
+                width: 95px;
+                height: 32px;
+                border-radius: 32px;
+                border: 1px solid #EEE;
+                text-align: center;
+                line-height: 32px;
+                color: #999;
+              }
+              .active {
+                background-color: #34db8d;
+                color: #ffffff;
+              }
+            }
+            .detailList {
+              height: 42px;
+              border-bottom: 0.5px solid #f1f1f1;
+            }
+            .more {
+              height: 42px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #007BD9;
+            }
           }
           img {
             width: 100%;
             display: block;
           }
-          .serve {
-            margin: 9px 0;
-          }
           .list {
             background-color: #ffffff;
-            margin: 9px 0;
+            margin:0 0 9px;
             .tab {
               display: flex;
               justify-content: space-around;
@@ -414,6 +455,7 @@ export default {
                 .text {
                   padding: 10px 0;
                   line-height: 1.8;
+                  text-align: justify;
                 }
               }
             }
@@ -449,13 +491,16 @@ export default {
                   font-weight: normal;
                 }
               }
+              .titleList {
+                font-weight: bold;
+              }
               .formList {
                 height: 50px;
                 border-bottom: 1px solid #eee;
                 display: flex;
                 align-items: center;
                 .left {
-                  width: 80px;
+                  width: 100px;
                 }
                 .right {
                   .price {
@@ -463,6 +508,9 @@ export default {
                     color: #ec8038;
                   }
                 }
+              }
+              .addPrice {
+                color: red;
               }
               .picker {
                 justify-content: space-between;
@@ -493,7 +541,7 @@ export default {
             display: flex;
             align-items: flex-start;
             .checkBox {
-              width: 140px;
+              width: 120px;
             }
             .lists {
               color: #007BD9;

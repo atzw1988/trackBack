@@ -108,51 +108,48 @@
                                     <div class="no">2</div>
                                     <div>为谁投保（被保险人）</div>
                                 </div>
-                                <div class="other" v-for="(item, index) in personList" :key="index">
-                                    <div class="title">被保险人{{index + 1}}</div>
+                                <div class="other">
+                                    <div class="title">被保险人1</div>
                                     <div class="kindlist">
-                                        <div class="list" :class="{select: item.socialSecurity == 1}">有社保(含新农村)</div>
-                                        <div class="list" :class="{select: item.socialSecurity == 0}">无社保</div>
+                                        <div class="list" :class="{select: socialSecurity == 1}">有社保(含新农村)</div>
+                                        <div class="list" :class="{select: socialSecurity == 0}">无社保</div>
                                     </div>
                                     <div class="formList picker">
                                         <div class="left">关系</div>
-                                        <div class="right">{{item.relation}}</div>
+                                        <div class="right">{{relation}}</div>
                                     </div>
-                                    <template v-if="item.relation != '本人'">
+                                    <template v-if="relation != '本人'">
                                         <div class="formList">
                                             <div class="left">姓名</div>
-                                            <div class="right">{{item.elseName || '请输入被保人中文姓名'}}</div>
+                                            <div class="right">{{elseName || '请输入被保人中文姓名'}}</div>
                                         </div>
                                         <div class="formList picker">
                                             <div class="left">证件类型</div>
-                                            <div class="right">{{item.elseCardType}}</div>
+                                            <div class="right">{{elseCardType}}</div>
                                         </div>
                                         <div class="formList">
                                             <div class="left">证件号码</div>
-                                            <div class="right">{{item.elseCardNo || '请输入证件号码'}}</div>
+                                            <div class="right">{{elseCardNo || '请输入证件号码'}}</div>
                                         </div>
-                                        <div class="formList picker" v-if="item.elseCardType != '身份证'">
+                                        <div class="formList picker" v-if="elseCardType != '身份证'">
                                             <div class="left">性别</div>
-                                            <div class="right">{{item.elseSex}}</div>
+                                            <div class="right">{{elseSex}}</div>
                                         </div>
-                                        <div class="formList picker" v-if="item.elseCardType != '身份证'">
+                                        <div class="formList picker" v-if="elseCardType != '身份证'">
                                             <div class="left">出生日期</div>
-                                            <div class="right">{{item.elseBirth || '请选择出生日期'}}</div>
+                                            <div class="right">{{elseBirth || '请选择出生日期'}}</div>
                                         </div>
                                         <div class="formList">
                                             <div class="left">手机号</div>
-                                            <div class="right">{{item.elsePhone || '请输入手机号码'}}</div>
+                                            <div class="right">{{elsePhone || '请输入手机号码'}}</div>
                                         </div>
                                     </template>
                                     <div class="formList picker addperson">
                                         <div class="left">保费</div>
                                         <div class="right">
-                                            <span class="price">{{item.total}}</span>元
+                                            <span class="price">{{total}}</span>元
                                         </div>
                                     </div>
-                                </div>
-                                <div class="kindlist" v-if="insuranceType == 1">
-                                    <div class="list select">新增被保人</div>
                                 </div>
                             </div>
                         </div>
@@ -180,153 +177,24 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="mask"></div> -->
+        <div class="mask"></div>
         <video id="awesome" width="375" height="667" controls autoplay loop></video>
-        <button @click="begin">开始</button>
+        <track-button @click="begin" :loading="loading"></track-button>
     </div>
 </template>
 
 <script>
-    import {
-        get
-    } from '@/utils/jutils.js'
-    import html2canvas from 'html2canvas'
-    import Whammy from 'whammy'
-    import {
-        setTimeout
-    } from 'timers'
-    export default {
-        name: 'home',
-        data () {
-            return {
-                pageTitle: '幸福e家·百万医疗保险(升级版)',
-                questionList: [{
-                        title: '有了医保，还需要购买百万医疗险吗?',
-                        text: '很有必要。目前治疗重疾的费用从几十万到几百万不等，一般医保只能覆盖治疗费用约65%，且治疗重疾所需的自费项目（伽马刀、质子治疗）等往往又是医保所不覆盖的。而幸福e家百万医疗没有这些限制，不仅可以涵盖，是对医保最好地商业保险补充。'
-                    },
-                    {
-                        title: '我还年轻有必要购买幸福e家百万医疗保险吗?',
-                        text: '青壮年时期生理机能处于最佳状态，得病的可能性相对较低，但也会面临意外风险；当步入中老年后，身体机能会急剧下降，患病几率增大，但那时的健康状况将不再符合投保条件。因此健康险还是要趁早买，一方面防范于未然，另一方面还能获得连续续保的资格，获得长期保障哦。'
-                    },
-                    {
-                        title: '怎么样才能投保家庭版？与个人版有何区别？',
-                        text: '与个人版相比，保障内容不变，但家庭投保享受更保费折扣，2人投保9.5折，3-7人投保保费享受9折优惠。若投保家庭版，被保险人人数为2人及以上，是投保人本人，或与投保人有保险利益的父母、配偶、子女以及配偶父母,但不允许隔代投保。'
-                    }
-                ],
-                selfName: '边云',
-                selfCardType: '身份证',
-                selfCardNo: '130184197911244529',
-                selfSex: '女',
-                selfBirth: '1979-11-24',
-                selfPhone: '18566688104',
-                insuranceType: 0,
-                personList: [{
-                    socialSecurity: 1,
-                    relation: '配偶',
-                    elseName: '',
-                    elseCardType: '身份证',
-                    elseCardNo: '',
-                    elseSex: '',
-                    elseBirth: '',
-                    elsePhone: '',
-                    total: 0
-                }],
-                personItem: {
-                    socialSecurity: 1,
-                    relation: '配偶',
-                    elseName: '',
-                    elseCardType: '身份证',
-                    elseCardNo: '',
-                    elseSex: '',
-                    elseBirth: '',
-                    elsePhone: '',
-                    total: 0
-                },
-                readFlag: false,
-                html2canvas: null,
-                video: null,
-                list: [],
-                pages: null,
-                saveCanvas: null,
-                timer: null,
-                question0: false,
-                question1: false,
-                question2: false,
-                question3: false,
-                select: null,
-                premium: 0,
-                totalMoney: 0
-            }
-        },
-        methods: {
-            finalizeVideo () {
-                const output = this.video.compile(false)
-                console.log(output)
-                const url = URL.createObjectURL(output)
-                document.getElementById('awesome').src = url
-            },
-            createFrame () {
-                html2canvas(this.$refs.pages, {
-                    allowTaint: true,
-                    useCORS: true,
-                    backgroundColor: null,
-                    imageTimeout: 0,
-                    removeContainer: true,
-                    foreignObjectRendering: false
-                }).then(canvas => {
-                    this.video.add(canvas)
-                    this.saveCanvas = canvas
-                })
-                this.h2c = null
-            },
-            createSaveFrame () {
-                this.video.add(this.saveCanvas)
-            },
-            createVideos () {
-                const createVideo = (index) => {
-                    clearInterval(this.timer)
-                    const item = this.list[index]
-                    if (item.type === 1) {
-                        this.select.scrollTop = item.top
-                    } else if (item.type === 2 || item.type === 9 || item.type === 5) {
-                        if (item.numbers) {
-                            this.personList[item.numbers][item.inputParam] = item.inputValue
-                        } else {
-                            this[item.inputParam] = item.inputValue
-                        }
-                    } else if (item.type === 6) {
-                        this[item.inputParam] = item.isShow === 'true'
-                    } else if (item.type === 8) {
-                        this.personList.push(this.personItem)
-                    }
-                    this.createFrame()
-                    this.timer = setInterval(() => {
-                        this.createSaveFrame()
-                    }, 200)
-                    if (index < this.list.length - 1) {
-                        setTimeout(() => {
-                            createVideo(index + 1)
-                        }, item.time * 5)
-                    } else {
-                        console.log('生成结束' + new Date())
-                        clearInterval(this.timer)
-                        window.requestAnimationFrame(this.finalizeVideo)
-                    }
-                }
-                createVideo(1)
-            },
-            begin () {
-                this.select = this.$refs.page
-                this.createVideos()
-            }
-        },
-        mounted () {
-            get(1906, (list) => {
-                this.list = list
-            })
-            this.video = new Whammy.Video(25)
+import { replay } from '@/mixin/replay.js'
+export default {
+    name: 'fangai',
+    mixins: [replay],
+    data () {
+        return {
+            pageTitle: '富邦关爱e生.防癌医疗险',
+            relation: '配偶'
         }
     }
+}
 </script>
 
 <style lang="less" scoped>

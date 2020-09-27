@@ -17,7 +17,7 @@
               <div class="imgList">
                 <img src="../../assets/zhuzhai/p1.png" mode="widthFix">
                 <img src="../../assets/zhuzhai/p2.png" mode="widthFix">
-                <img src="../../assets/zhuzhai/p2.png" mode="widthFix">
+                <img src="../../assets/zhuzhai/p3.png" mode="widthFix">
               </div>
             </div>
             <div class="liucheng">
@@ -100,13 +100,13 @@
                   <div class="right">{{selfCardNo}}</div>
                 </div>
                 <div class="formList" v-if="selfCardType != '身份证'">
-                    <div class="left">性别</div>
-                    <div class="right">{{selfSex}}</div>
-                  </div>
-                  <div class="formList" v-if="selfCardType != '身份证'">
-                    <div class="left">出生日期</div>
-                    <div class="right">{{selfBirth}}</div>
-                  </div>
+                  <div class="left">性别</div>
+                  <div class="right">{{selfSex}}</div>
+                </div>
+                <div class="formList" v-if="selfCardType != '身份证'">
+                  <div class="left">出生日期</div>
+                  <div class="right">{{selfBirth}}</div>
+                </div>
                 <div class="formList">
                   <div class="left">手机号</div>
                   <div class="right">{{selfPhone}}</div>
@@ -116,59 +116,63 @@
                   <div>为谁投保（被保险人）</div>
                 </div>
                 <div class="other">
-                  <div class="title">被保险人1</div>
-                    <div class="formList picker">
-                      <div class="left">关系</div>
-                      <div class="right">{{relation}}</div>
-                    </div>
-                    <template v-if="relation != '本人'">
-                      <div class="formList">
-                        <div class="left">姓名</div>
-                        <div class="right">{{elseName || '请输入被保人中文姓名'}}</div>
-                      </div>
-                      <div class="formList picker">
-                        <div class="left">证件类型</div>
-                        <div class="right">{{elseCardType}}</div>
-                      </div>
-                      <div class="formList">
-                        <div class="left">证件号码</div>
-                        <div class="right">{{elseCardNo || '请输入证件号码'}}</div>
-                      </div>
-                      <div class="formList picker" v-if="elseCardType != '身份证'">
-                        <div class="left">性别</div>
-                        <div class="right">{{elseSex}}</div>
-                      </div>
-                      <div class="formList picker" v-if="elseCardType != '身份证'">
-                        <div class="left">出生日期</div>
-                        <div class="right">{{elseBirth || '请选择出生日期'}}</div>
-                      </div>
-                      <div class="formList">
-                        <div class="left">手机号</div>
-                        <div class="right">{{elsePhone || '请输入手机号码'}}</div>
-                      </div>
-                    </template>
-                    <div class="formList picker">
-                      <div class="left">房屋结构</div>
-                      <div class="right">{{houseType || '请选择'}}</div>
+                  <div class="formList picker">
+                    <div class="left">关系</div>
+                    <div class="right">{{relation}}</div>
+                  </div>
+                  <template v-if="relation != '本人'">
+                    <div class="formList">
+                      <div class="left">姓名</div>
+                      <div class="right">{{elseName || '请输入被保人中文姓名'}}</div>
                     </div>
                     <div class="formList picker">
-                      <div class="left">标的地址</div>
-                      <div class="right">{{address || '请选择'}}</div>
+                      <div class="left">证件类型</div>
+                      <div class="right">{{elseCardType}}</div>
                     </div>
                     <div class="formList">
-                      <div class="left">详细地址</div>
-                      <div class="right">{{detailAddress || '请输入'}}</div>
+                      <div class="left">证件号码</div>
+                      <div class="right">{{elseCardNo || '请输入证件号码'}}</div>
                     </div>
-                    <div class="formList picker addperson">
-                      <div class="left">保费</div>
-                      <div class="right">
-                        <span class="price">{{total}}</span>元
-                      </div>
+                    <div class="formList picker" v-if="elseCardType != '身份证'">
+                      <div class="left">性别</div>
+                      <div class="right">{{elseSex}}</div>
                     </div>
+                    <div class="formList picker" v-if="elseCardType != '身份证'">
+                      <div class="left">出生日期</div>
+                      <div class="right">{{elseBirth || '请选择出生日期'}}</div>
+                    </div>
+                    <div class="formList">
+                      <div class="left">手机号</div>
+                      <div class="right">{{elsePhone || '请输入手机号码'}}</div>
+                    </div>
+                  </template>
+                  <div class="formList picker">
+                    <div class="left">房屋结构</div>
+                    <div class="right">{{houseType || '请选择'}}</div>
+                  </div>
+                  <div class="formList picker">
+                    <div class="left">标的地址</div>
+                    <div class="right">{{address || '请选择'}}</div>
+                  </div>
+                  <div class="formList">
+                    <div class="left">详细地址</div>
+                    <div class="right">{{detailAddress || '请输入'}}</div>
+                  </div>
+                </div>
+                <div class="title unit">
+                  <div class="left">
+                    <div class="no">3</div>
+                    <div>投保分数</div>
+                  </div>
+                  <div class="right">
+                    <div class="sup">-</div>
+                    <div class="num">{{unit}}</div>
+                    <div class="add">+</div>
                   </div>
                 </div>
               </div>
-              <div class="ruleList">
+            </div>
+            <div class="ruleList">
               <van-checkbox class="checkBox" icon-size="14px" shape="square" v-model="readFlag">
                 我已确认
               </van-checkbox>
@@ -178,8 +182,8 @@
         </div>
         <div class="btn">
           <div class="left">
-            <div class="price" v-if="Number(totalMoney) > 0">
-              <span class="total" v-if="Number(totalMoney) > Number(premium)">{{totalMoney}}元</span><span class="num">{{premium}}</span>
+            <div class="price" v-if="Number(premium) > 0">
+              <span class="num">{{premium}}</span>
               <span>元/年</span>
             </div>
             <div class="price" v-else>
@@ -192,127 +196,25 @@
         </div>
       </div>
     </div>
-    <!-- <div class="mask"></div> -->
+    <div class="mask"></div>
     <video id="awesome" width="375" height="667" controls autoplay loop></video>
-    <button @click="begin">开始</button>
+    <track-button @click="begin" :loading="loading"></track-button>
   </div>
 </template>
 
 <script>
-import { get } from '@/utils/jutils.js'
-import html2canvas from 'html2canvas'
-import Whammy from 'whammy'
-import { setTimeout } from 'timers'
+import { replay } from '@/mixin/replay.js'
 export default {
-  name: 'home',
+  name: 'zhuzhai',
+  mixins: [replay],
   data () {
     return {
-      pageTitle: '幸福e家·百万医疗保险(升级版)',
-      selfName: '边云',
-      selfCardType: '身份证',
-      selfCardNo: '130184197911244529',
-      selfSex: '女',
-      selfBirth: '1979-11-24',
-      selfPhone: '18566688104',
+      pageTitle: '住宅小区守护神·家庭财产保险',
       relation: '本人',
-      elseName: '',
-      elseCardType: '身份证',
-      elseCardNo: '',
-      elseSex: '',
-      elseBirth: '',
-      elsePhone: '',
       houseType: '',
       address: '',
-      detailAddress: '',
-      total: 0,
-      readFlag: false,
-      video: null,
-      list: [],
-      pages: null,
-      saveCanvas: null,
-      timer: null,
-      question0: false,
-      question1: false,
-      question2: false,
-      question3: false,
-      question4: false,
-      select: null,
-      premium: 0,
-      totalMoney: 0
+      detailAddress: ''
     }
-  },
-  methods: {
-    finalizeVideo () {
-      const output = this.video.compile(false)
-      console.log(output)
-      const url = URL.createObjectURL(output)
-      document.getElementById('awesome').src = url
-    },
-    createFrame () {
-      html2canvas(this.$refs.pages, {
-        allowTaint: true,
-        useCORS: true,
-        backgroundColor: null,
-        imageTimeout: 0,
-        removeContainer: true,
-        foreignObjectRendering: false
-      }).then(canvas => {
-        this.video.add(canvas)
-        this.saveCanvas = canvas
-      })
-      this.h2c = null
-    },
-    createSaveFrame () {
-      this.video.add(this.saveCanvas)
-    },
-    createVideos () {
-      const createVideo = (index) => {
-        clearInterval(this.timer)
-        const item = this.list[index]
-        if (item.type === 1) {
-          this.select.scrollTop = item.top
-        } else if (item.type === 2 || item.type === 9 || item.type === 5) {
-          if (item.numbers) {
-            this.personList[item.numbers][item.inputParam] = item.inputValue
-          } else {
-            this[item.inputParam] = item.inputValue
-          }
-        } else if (item.type === 6) {
-          this[item.inputParam] = item.isShow === 'true'
-        } else if (item.type === 8) {
-          this.personList.push(this.personItem)
-        }
-        this.createFrame()
-        this.timer = setInterval(() => {
-          this.createSaveFrame()
-        }, 200)
-        if (index < this.list.length - 1) {
-          setTimeout(() => {
-            createVideo(index + 1)
-          }, item.time * 5)
-        } else {
-          console.log('生成结束' + new Date())
-          clearInterval(this.timer)
-          window.requestAnimationFrame(this.finalizeVideo)
-        }
-      }
-      createVideo(1)
-    },
-    begin () {
-      this.select = this.$refs.page
-      this.createVideos()
-    },
-    console (index) {
-      setTimeout(() => {
-        console.log(index)
-      }, 1000)
-    }
-  },
-  mounted () {
-    get(1906, (list) => {
-      this.list = list
-    })
-    this.video = new Whammy.Video(25)
   }
 }
 </script>
@@ -374,7 +276,6 @@ export default {
               justify-content: space-around;
               height: 45px;
               align-items: center;
-              margin-bottom: 13px;
             }
           }
           .liucheng {
@@ -389,7 +290,7 @@ export default {
                 font-size: 12px;
                 .left {
                   display: flex;
-                  height: 45px;
+                  height: 40px;
                   align-items: center;
                   border-bottom: 1px solid #eee;
                   .icon {
@@ -411,21 +312,20 @@ export default {
             }
           }
           .formTitle {
-            height: 52px;
+            height: 50px;
             padding: 0 20px;
-            line-height: 52px;
+            line-height: 50px;
             background-color: #ffffff;
-            margin: 9px 0;
+            margin: 9px 0 0;
             font-size: 16px;
             font-weight: bold;
           }
           .formContent {
-            padding: 0 15px;
             .form {
               background-color: #ffffff;
               padding: 0 15px;
               .title {
-                height: 55px;
+                height: 50px;
                 font-weight: bold;
                 display: flex;
                 align-items: center;
@@ -536,7 +436,37 @@ export default {
       }
     }
     .other {
-      padding-bottom: 20px;
+      padding-bottom: 10px;
+    }
+    .unit {
+      padding-bottom: 10px;
+      justify-content: space-between;
+      .left {
+        display: flex;
+      }
+      .right {
+        display: flex;
+        align-items: center;
+        font-weight: normal;
+        text-align: center;
+        line-height: 25px;
+        .sup, .add {
+          width: 25px;
+          height: 25px;
+          border: 1px solid #eee;
+        }
+        .sup {
+          border-radius: 5px 0 0 5px;
+        }
+        .add {
+          border-radius: 0 5px 5px 0;
+        }
+        .num {
+          width: 35px;
+          height: 25px;
+          border: 1px solid #eee;
+        }
+      }
     }
   }
 </style>
