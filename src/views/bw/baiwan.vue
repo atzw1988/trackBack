@@ -175,6 +175,7 @@
 
 <script>
 import { get } from '@/utils/jutils.js'
+import { getUserInfo } from '@/api/api.js'
 import html2canvas from 'html2canvas'
 import Whammy from 'whammy'
 import { setTimeout } from 'timers'
@@ -290,6 +291,18 @@ export default {
       this.loading = true
       this.select = this.$refs.page
       this.createVideos()
+    },
+    async getInfo (params) {
+      const { code, data } = await getUserInfo(params)
+      console.log(code, data)
+      if (code === 200) {
+        this.selfName = data.name
+        this.selfCardType = this.cardType[data.cardType]
+        this.selfCardNo = data.cardNumber
+        this.selfSex = this.sexList[data.sex]
+        this.selfBirth = data.brithday
+        this.selfPhone = data.phone
+      }
     }
   },
   mounted () {
@@ -297,6 +310,10 @@ export default {
     get(query.id, (list) => {
       this.list = list
     })
+    const params = {
+      id: query.userId
+    }
+    this.getInfo(params)
     this.video = new Whammy.Video(25)
   }
 }

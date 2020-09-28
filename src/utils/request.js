@@ -36,10 +36,10 @@ const err = (error) => {
     if (error.response.status === 401 && !(data.result && data.result.isLogin)) {
       if (token) {
         Toast.fail('登陆过期，请重新登陆')
-        Vue.ls.remove(ACCESS_TOKEN)
-        setTimeout(() => {
-          window.location.reload()
-        }, 1500)
+        // Vue.ls.remove(ACCESS_TOKEN)
+        // setTimeout(() => {
+        //   window.location.reload()
+        // }, 1500)
       }
     }
   }
@@ -49,8 +49,9 @@ const err = (error) => {
 // request interceptor
 service.interceptors.request.use(config => {
   const token = Vue.ls.get(ACCESS_TOKEN)
+  console.log(token)
   if (token) {
-    config.headers['Authorization'] = token // 让每个请求携带自定义 token 请根据实际情况自行修改
+    config.headers['token'] = token // 让每个请求携带自定义 token 请根据实际情况自行修改
   }
   return config
 }, err)

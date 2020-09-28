@@ -20,3 +20,11 @@ export function getList (params) {
     method: 'get'
   })
 }
+
+export function getUserInfo (params) {
+  return axios({
+    url: api.userInfo,
+    params,
+    method: 'get'
+  })
+}

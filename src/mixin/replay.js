@@ -2,6 +2,7 @@ import html2canvas from 'html2canvas'
 import Whammy from 'whammy'
 import { setTimeout } from 'timers'
 import { get } from '@/utils/jutils.js'
+import { getUserInfo } from '@/api/api.js'
 
 const replay = {
     data () {
@@ -43,7 +44,18 @@ const replay = {
             moreText: '更多保障详情',
             showMore: false,
             unit: 1,
-            loading: false
+            loading: false,
+            cardType: {
+                '111': '身份证',
+                '414': '护照',
+                '511': '台胞证',
+                '516': '港澳台居民居住证',
+                '10': '外国人永久居住证'
+            },
+            sexList: {
+                '1': '男',
+                '2': '女'
+            }
         }
     },
     methods: {
@@ -101,6 +113,18 @@ const replay = {
             this.loading = true
             this.select = this.$refs.page
             this.createVideos()
+        },
+        async getInfo (params) {
+            const { code, data } = await getUserInfo(params)
+            console.log(code, data)
+            if (code === 200) {
+                this.selfName = data.name
+                this.selfCardType = this.cardType[data.cardType]
+                this.selfCardNo = data.cardNumber
+                this.selfSex = this.sexList[data.sex]
+                this.selfBirth = data.brithday
+                this.selfPhone = data.phone
+            }
         }
     },
     mounted () {
@@ -110,6 +134,10 @@ const replay = {
         get(query.id, (list) => {
             this.list = list
         })
+        const params = {
+            id: query.userId
+        }
+        this.getInfo(params)
     }
 }
 
