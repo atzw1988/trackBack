@@ -229,6 +229,70 @@ const routes = [
       title: '交通守护条款'
     },
     component: () => import('@/views/jt/ruleJt')
+  },
+  {
+    path: '/chihuo',
+    name: 'chihuo',
+    meta: {
+      title: '吃货卫士'
+    },
+    component: () => import('@/views/ch/chihuo')
+  },
+  {
+    path: '/needCh',
+    name: 'needCh',
+    meta: {
+      title: '吃货卫士须知'
+    },
+    component: () => import('@/views/ch/needCh')
+  },
+  {
+    path: '/ruleCh',
+    name: 'ruleCh',
+    meta: {
+      title: '吃货卫士条款'
+    },
+    component: () => import('@/views/ch/ruleCh')
+  },
+  {
+    path: '/dutyCh',
+    name: 'dutyCh',
+    meta: {
+      title: '吃货卫士免责事项'
+    },
+    component: () => import('@/views/ch/dutyCh')
+  },
+  {
+    path: '/chuxing',
+    name: 'chuxing',
+    meta: {
+      title: '吃货卫士'
+    },
+    component: () => import('@/views/cx/chuxing')
+  },
+  {
+    path: '/needCx',
+    name: 'needCx',
+    meta: {
+      title: '吃货卫士须知'
+    },
+    component: () => import('@/views/cx/needCx')
+  },
+  {
+    path: '/ruleCx',
+    name: 'ruleCx',
+    meta: {
+      title: '吃货卫士条款'
+    },
+    component: () => import('@/views/cx/ruleCx')
+  },
+  {
+    path: '/dutyCx',
+    name: 'dutyCx',
+    meta: {
+      title: '吃货卫士免责事项'
+    },
+    component: () => import('@/views/cx/dutyCx')
   }
 ]
 

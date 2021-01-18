@@ -6,10 +6,8 @@
         <div class="pageTitle">{{pageTitle}}</div>
         <div class="page" ref="page">
           <div class="test">
-            <img src="../../assets/jiaotong/banner.png" mode="widthFix">
-            <img v-if="plan == '计划一'" src="../../assets/jiaotong/plan.png" mode="widthFix" alt="">
-            <img v-if="plan == '计划二'" src="../../assets/jiaotong/plan.png" mode="widthFix" alt="">
-            <img v-if="plan == '计划三'" src="../../assets/jiaotong/plan.png" mode="widthFix" alt="">
+            <img src="../../assets/chihuo/banner.png" mode="widthFix">
+            <img src="../../assets/chihuo/plan.png" mode="widthFix" alt="">
             <div class="list">
               <div class="tab">
                 <div class="tabItem">产品特色</div>
@@ -17,38 +15,48 @@
                 <div class="tabItem">我要投保</div>
               </div>
               <div class="imgList">
-                <img src="../../assets/jiaotong/p1.png" mode="widthFix">
-                <img src="../../assets/jiaotong/p2.png" mode="widthFix">
+                <img src="../../assets/chihuo/p1.png" mode="widthFix">
+                <img src="../../assets/chihuo/p2.png" mode="widthFix">
+                <img src="../../assets/chihuo/p3.png" mode="widthFix">
               </div>
             </div>
             <div class="liucheng">
-              <img src="../../assets/jiaotong/lipei.png">
+              <img src="../../assets/chihuo/lipei.png">
               <div class="question">
                 <div class="title">常见问题</div>
                 <div class="item">
                   <div class="left">
                     <div class="icon">Q</div>
-                    <div>本保险保障的交通事故包含哪些？</div>
+                    <div>什么是急性肠胃炎？</div>
                   </div>
-                  <div v-if="question0" class="text">
-                    <div>（1）被保险人搭乘或驾驶汽车期间遭受意外伤害事故，包含自驾车及搭乘友人车辆或搭乘出租车等，但不包含职业驾驶人执行驾驶职务期间；</div>
-                    <div>（2）被保险人以乘客身份乘坐合法合规运营的交通工具而遭受意外伤害事故，包含有陆上交通工具（如火车、公交车、BRT快速公交、地铁、轻轨、动车等）、海上大众交通工具（如轮船、邮轮）、空中大众交通工具（如飞机）；</div>
-                    <div>（3）被保险人非以驾驶人或乘客身份而遭受机动车碰撞及空中交通工具坠落所致的交通意外伤害事故（如以行人身份行走在道路上遭遇机动车碰撞等）。</div>
-                  </div>
+                  <div v-if="question0" class="text">A：急性肠胃炎是胃肠粘膜的急性炎症，由多种不同的原因，如细菌、病毒感染、毒素、化学品作用等引起的胃肠道急性、弥漫性炎症，临床表现主要为恶心、呕吐、腹泻、发热等。可分为急性胃炎、急性肠炎、急性胃肠炎三种类型。急性胃炎是由多种病因引起的急性胃粘膜炎症，临床上急性发病，常表现为上腹部症状;急性肠炎常与肠道感染、饮食不当或摄入过量不新鲜食物引起食物中毒、化学品和药物中毒、食物过敏有关。临床表现为腹泻、腹痛、腹胀伴不同程度恶心呕吐，严重时可导致脱水，甚至休克;急性肠胃炎则具有急性肠炎和胃炎两者的表现。</div>
                 </div>
                 <div class="item">
                   <div class="left">
                     <div class="icon">Q</div>
-                    <div>是否有职业类别限制？</div>
+                    <div>急性肠胃炎门诊或住院理赔时须提供哪些材料？</div>
                   </div>
-                  <div v-if="question1" class="text">交通守护意外保险没有职业限制，但是若作为职业驾驶人执行驾驶职务期间不在交通守护保障范围内，但其它未执行职务期间仍可享受保障（比如，出租车司机工作期间、货车司机工作期间均称之为职业驾驶人执行驾驶职务期间）</div>
+                  <template v-if="question1">
+                    <div class="text">A：急性肠胃炎医疗费用保险金申请：</div>
+                    <div class="text">1) 保险金理赔申请书;</div>
+                    <div class="text">2) 保险单正本或其他保险凭证;</div>
+                    <div class="text">3) 保险金申请人的身份证明或户籍证明;</div>
+                    <div class="text">4) 医院出具的医疗证明和医疗费用原始凭证;</div>
+                    <div class="text">5) 保险金申请人所能提供的与确认保险事故的性质、原因、伤害程度等有关的其他证明和资料。</div>
+                  </template>
                 </div>
                 <div class="item">
                   <div class="left">
                     <div class="icon">Q</div>
-                    <div>富邦交通守护保险适合哪些人？</div>
+                    <div>本保险对医院有什么要求？</div>
                   </div>
-                  <div v-if="question2" class="text">0~70周岁，身体健康、能正常工作或正常生活的人群都可购买富邦交通守护保险，每一被保险人最多限保5份，超出部分无效。</div>
+                  <template v-if="question2">
+                    <div class="text">A：本保险合同约定的医院或认可的医疗机构是指符合下列所以条件的机构：</div>
+                    <div class="text">1) 拥有合法经营执照;</div>
+                    <div class="text">2) 设立的主要目的为向受伤者或患病者提供留院治疗和护理服务;</div>
+                    <div class="text">3) 有合格的医生和护士提供全日二十四小时的医疗和护理服务;</div>
+                    <div class="text">4) 非主要作为康复医院、诊所、护理、疗养、戒酒、戒毒或类似的医疗机构。若医疗机构处于中国境内（不包含港、澳、台地区），则医院必须是中华人民共和国和国卫生部医院等级分类中的二级或二级以上的医院或保险人认可的医疗机构。</div>
+                  </template>
                 </div>
               </div>
             </div>
@@ -68,33 +76,29 @@
                   <div class="right">{{selfCardNo}}</div>
                 </div>
                 <div class="formList" v-if="selfCardType != '身份证'">
-                    <div class="left">性别</div>
-                    <div class="right">{{selfSex}}</div>
-                  </div>
-                  <div class="formList" v-if="selfCardType != '身份证'">
-                    <div class="left">出生日期</div>
-                    <div class="right">{{selfBirth}}</div>
-                  </div>
-                <div class="formList">
-                  <div class="left">手机号</div>
-                  <div class="right">{{selfPhone}}</div>
+                  <div class="left">性别</div>
+                  <div class="right">{{selfSex}}</div>
                 </div>
-                <div class="title">
-                  <div class="no">2</div>
-                  <div>为谁投保（被保险人）</div>
+                <div class="formList" v-if="selfCardType != '身份证'">
+                  <div class="left">出生日期</div>
+                  <div class="right">{{selfBirth}}</div>
                 </div>
-                <div class="other">
-                  <div class="title">被保险人1</div>
-                    <div class="formList picker">
-                      <div class="left">投保计划</div>
-                      <div class="right">{{plan}}</div>
-                    </div>
-                    <div class="formList picker">
-                      <div class="left">关系</div>
-                      <div class="right">{{relation}}</div>
-                    </div>
-                    <template v-if="relation != '本人'">
-                      <div class="formList">
+              <div class="formList">
+                <div class="left">手机号</div>
+                <div class="right">{{selfPhone}}</div>
+              </div>
+              <div class="title">
+                <div class="no">2</div>
+                <div>为谁投保（被保险人）</div>
+              </div>
+              <div class="other">
+                <div class="title">被保险人</div>
+                  <div class="formList picker">
+                    <div class="left">关系</div>
+                    <div class="right">{{relation}}</div>
+                  </div>
+                  <template v-if="relation != '本人'">
+                    <div class="formList">
                       <div class="left">姓名</div>
                       <div class="right">{{elseName || '请输入被保人中文姓名'}}</div>
                     </div>
@@ -119,16 +123,11 @@
                       <div class="right">{{elsePhone || '请输入手机号码'}}</div>
                     </div>
                   </template>
-                </div>
-                <div class="title unit">
-                  <div class="left">
-                    <div class="no">3</div>
-                    <div>投保分数</div>
-                  </div>
-                  <div class="right">
-                    <div class="sup">-</div>
-                    <div class="num">{{unit}}</div>
-                    <div class="add">+</div>
+                  <div class="formList picker addperson">
+                    <div class="left">保费</div>
+                    <div class="right">
+                      <span class="price">{{total}}</span>元
+                    </div>
                   </div>
                 </div>
               </div>
@@ -148,7 +147,7 @@
               <span>元/年</span>
             </div>
             <div class="price" v-else>
-              <span class="num">88</span>
+              <span class="num">20</span>
               <span>元/年</span>
             </div>
             <div class="share">分享</div>
@@ -157,7 +156,7 @@
         </div>
       </div>
     </div>
-    <div class="mask"></div>
+    <!-- <div class="mask"></div> -->
     <video id="awesome" width="375" height="667" controls autoplay loop></video>
     <track-button @click="begin" :loading="loading"></track-button>
   </div>
@@ -166,11 +165,11 @@
 <script>
 import { replay } from '@/mixin/replay.js'
 export default {
-  name: 'jiaotong',
+  name: 'chihuo',
   mixins: [replay],
   data () {
     return {
-      pageTitle: '交通守护·意外伤害保险',
+      pageTitle: '吃货卫士健康保险定制版',
       plan: '计划一',
       relation: '本人'
     }

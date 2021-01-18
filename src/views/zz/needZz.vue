@@ -4,7 +4,7 @@
     <div class="pages" ref="pages">
       <div class="need">
         <div class="content">
-          <div class="title">富邦百万医疗投保须知</div>
+          <div class="title">住宅小区守护神·家庭财产保险投保须知</div>
           <div class="des">为了保证被保险人权益不受影响，请完整阅读以下内容</div>
         </div>
         <div class="list" ref="need">

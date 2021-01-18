@@ -12,7 +12,7 @@ export default {
     mounted () {
         const query = this.$route.query
         let pageName = query.pageName
-        if (pageName) {
+        if (pageName && query.token && query.id && query.userId) {
             Vue.ls.set(ACCESS_TOKEN, query.token)
             const list = ['stateFa', 'stateJn', 'stateJw', 'stateJt', 'stateZz']
             if (list.indexOf(pageName) > -1) pageName = 'state'

@@ -4,16 +4,14 @@
     <div class="pages" ref="pages">
       <div class="need">
         <div class="content">
-          <div class="title">FUN心游境内旅游险投保须知</div>
+          <div class="title">富邦吃货卫士健康保险定制版投保须知</div>
           <div class="des">为了保证被保险人权益不受影响，请完整阅读以下内容</div>
         </div>
         <div class="list" ref="need">
           <div class="imgList">
-            <img class="img" src="../../assets/jingnei/fxyjingneiyouxuzhi1.png" mode="widthFix">
-            <img class="img" src="../../assets/jingnei/fxyjingneiyouxuzhi2.png" mode="widthFix">
-            <img class="img" src="../../assets/jingnei/fxyjingneiyouxuzhi3.png" mode="widthFix">
-            <img class="img" src="../../assets/jingnei/fxyjingneiyouxuzhi4.png" mode="widthFix">
-            <img class="img" src="../../assets/jingnei/fxyjingneiyouxuzhi5.png" mode="widthFix">
+            <img class="img" src="../../assets/chihuo/chihuoxuzhi1.png" mode="widthFix">
+            <img class="img" src="../../assets/chihuo/chihuoxuzhi2.png" mode="widthFix">
+            <img class="img" src="../../assets/chihuo/chihuoxuzhi3.png" mode="widthFix">
           </div>
         </div>
         <div class="btn" :class="{enble: enble}">我已仔细阅读全部内容</div>

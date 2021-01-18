@@ -47,11 +47,11 @@ import { replay } from '@/mixin/mixin.js'
                     break
                 }
                 case 'stateJt': {
-                    this.title = '富邦交通守护投保声明'
+                    this.title = '交通守护·意外伤害保险投保声明'
                     break
                 }
                 case 'stateZz': {
-                    this.title = '富邦家财险投保声明'
+                    this.title = '住宅小区守护神·家庭财产保险投保声明'
                     break
                 }
             }

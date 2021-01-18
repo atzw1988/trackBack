@@ -6,10 +6,8 @@
         <div class="pageTitle">{{pageTitle}}</div>
         <div class="page" ref="page">
           <div class="test">
-            <img src="../../assets/jiaotong/banner.png" mode="widthFix">
-            <img v-if="plan == '计划一'" src="../../assets/jiaotong/plan.png" mode="widthFix" alt="">
-            <img v-if="plan == '计划二'" src="../../assets/jiaotong/plan.png" mode="widthFix" alt="">
-            <img v-if="plan == '计划三'" src="../../assets/jiaotong/plan.png" mode="widthFix" alt="">
+            <img src="../../assets/chuxing/banner.png" mode="widthFix">
+            <img src="../../assets/chuxing/plan.png" mode="widthFix" alt="">
             <div class="list">
               <div class="tab">
                 <div class="tabItem">产品特色</div>
@@ -17,38 +15,43 @@
                 <div class="tabItem">我要投保</div>
               </div>
               <div class="imgList">
-                <img src="../../assets/jiaotong/p1.png" mode="widthFix">
-                <img src="../../assets/jiaotong/p2.png" mode="widthFix">
+                <img src="../../assets/chuxing/p1.png" mode="widthFix">
+                <img src="../../assets/chuxing/p2.png" mode="widthFix">
               </div>
             </div>
             <div class="liucheng">
-              <img src="../../assets/jiaotong/lipei.png">
+              <img src="../../assets/chuxing/lipei.png">
               <div class="question">
                 <div class="title">常见问题</div>
                 <div class="item">
                   <div class="left">
                     <div class="icon">Q</div>
-                    <div>本保险保障的交通事故包含哪些？</div>
+                    <div>本保险产品的保障范围包含了搭乘哪些交通工具时所发生的意外事故？</div>
                   </div>
-                  <div v-if="question0" class="text">
-                    <div>（1）被保险人搭乘或驾驶汽车期间遭受意外伤害事故，包含自驾车及搭乘友人车辆或搭乘出租车等，但不包含职业驾驶人执行驾驶职务期间；</div>
-                    <div>（2）被保险人以乘客身份乘坐合法合规运营的交通工具而遭受意外伤害事故，包含有陆上交通工具（如火车、公交车、BRT快速公交、地铁、轻轨、动车等）、海上大众交通工具（如轮船、邮轮）、空中大众交通工具（如飞机）；</div>
-                    <div>（3）被保险人非以驾驶人或乘客身份而遭受机动车碰撞及空中交通工具坠落所致的交通意外伤害事故（如以行人身份行走在道路上遭遇机动车碰撞等）。</div>
-                  </div>
+                  <template v-if="question0">
+                    <div class="text">1) 被保险人以乘客身份乘坐合法商业运营的客运汽车或被保险人乘坐不从事运营的家庭自用汽车、单位公务或商务用车期间遭受意外伤害所导致的保险责任；</div>
+                    <div class="text">2) 保险期间内被保险人每次以乘客身份乘坐合法商业运营的民航班机遭受意外伤害所导致的保险责任；</div>
+                    <div class="text">3) 保险期间内被保险人每次以乘客身份乘坐合法商业运营的客运火车期间遭受意外伤害所导致的保险责任；</div>
+                    <div class="text">4) 保险期间内被保险人每次以乘客身份乘坐合法商业运营的客运轮船期间遭受意外伤害所导致的保险责任。</div>
+                  </template>
                 </div>
                 <div class="item">
                   <div class="left">
                     <div class="icon">Q</div>
                     <div>是否有职业类别限制？</div>
                   </div>
-                  <div v-if="question1" class="text">交通守护意外保险没有职业限制，但是若作为职业驾驶人执行驾驶职务期间不在交通守护保障范围内，但其它未执行职务期间仍可享受保障（比如，出租车司机工作期间、货车司机工作期间均称之为职业驾驶人执行驾驶职务期间）</div>
+                  <template v-if="question1">
+                    <div class="text">A：出行交通意外保险没有职业限制</div>
+                  </template>
                 </div>
                 <div class="item">
                   <div class="left">
                     <div class="icon">Q</div>
-                    <div>富邦交通守护保险适合哪些人？</div>
+                    <div>富邦出行交通意外险适合哪些人？</div>
                   </div>
-                  <div v-if="question2" class="text">0~70周岁，身体健康、能正常工作或正常生活的人群都可购买富邦交通守护保险，每一被保险人最多限保5份，超出部分无效。</div>
+                  <template v-if="question2">
+                    <div class="text">A：18~80周岁，身体健康、能正常工作或正常生活的人群都可购买富邦出行交通意外险，每一被保险人最多限保1份，超出部分无效。</div>
+                  </template>
                 </div>
               </div>
             </div>
@@ -68,33 +71,29 @@
                   <div class="right">{{selfCardNo}}</div>
                 </div>
                 <div class="formList" v-if="selfCardType != '身份证'">
-                    <div class="left">性别</div>
-                    <div class="right">{{selfSex}}</div>
-                  </div>
-                  <div class="formList" v-if="selfCardType != '身份证'">
-                    <div class="left">出生日期</div>
-                    <div class="right">{{selfBirth}}</div>
-                  </div>
-                <div class="formList">
-                  <div class="left">手机号</div>
-                  <div class="right">{{selfPhone}}</div>
+                  <div class="left">性别</div>
+                  <div class="right">{{selfSex}}</div>
                 </div>
-                <div class="title">
-                  <div class="no">2</div>
-                  <div>为谁投保（被保险人）</div>
+                <div class="formList" v-if="selfCardType != '身份证'">
+                  <div class="left">出生日期</div>
+                  <div class="right">{{selfBirth}}</div>
                 </div>
-                <div class="other">
-                  <div class="title">被保险人1</div>
-                    <div class="formList picker">
-                      <div class="left">投保计划</div>
-                      <div class="right">{{plan}}</div>
-                    </div>
-                    <div class="formList picker">
-                      <div class="left">关系</div>
-                      <div class="right">{{relation}}</div>
-                    </div>
-                    <template v-if="relation != '本人'">
-                      <div class="formList">
+              <div class="formList">
+                <div class="left">手机号</div>
+                <div class="right">{{selfPhone}}</div>
+              </div>
+              <div class="title">
+                <div class="no">2</div>
+                <div>为谁投保（被保险人）</div>
+              </div>
+              <div class="other">
+                <div class="title">被保险人</div>
+                  <div class="formList picker">
+                    <div class="left">关系</div>
+                    <div class="right">{{relation}}</div>
+                  </div>
+                  <template v-if="relation != '本人'">
+                    <div class="formList">
                       <div class="left">姓名</div>
                       <div class="right">{{elseName || '请输入被保人中文姓名'}}</div>
                     </div>
@@ -119,16 +118,11 @@
                       <div class="right">{{elsePhone || '请输入手机号码'}}</div>
                     </div>
                   </template>
-                </div>
-                <div class="title unit">
-                  <div class="left">
-                    <div class="no">3</div>
-                    <div>投保分数</div>
-                  </div>
-                  <div class="right">
-                    <div class="sup">-</div>
-                    <div class="num">{{unit}}</div>
-                    <div class="add">+</div>
+                  <div class="formList picker addperson">
+                    <div class="left">保费</div>
+                    <div class="right">
+                      <span class="price">{{total}}</span>元
+                    </div>
                   </div>
                 </div>
               </div>
@@ -148,7 +142,7 @@
               <span>元/年</span>
             </div>
             <div class="price" v-else>
-              <span class="num">88</span>
+              <span class="num">50</span>
               <span>元/年</span>
             </div>
             <div class="share">分享</div>
@@ -157,7 +151,7 @@
         </div>
       </div>
     </div>
-    <div class="mask"></div>
+    <!-- <div class="mask"></div> -->
     <video id="awesome" width="375" height="667" controls autoplay loop></video>
     <track-button @click="begin" :loading="loading"></track-button>
   </div>
@@ -166,11 +160,11 @@
 <script>
 import { replay } from '@/mixin/replay.js'
 export default {
-  name: 'jiaotong',
+  name: 'chuxing',
   mixins: [replay],
   data () {
     return {
-      pageTitle: '交通守护·意外伤害保险',
+      pageTitle: '富邦交通出行意外险',
       plan: '计划一',
       relation: '本人'
     }
