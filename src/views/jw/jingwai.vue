@@ -340,7 +340,7 @@ export default {
             planTwo: '1天～1年'
         }
       ],
-      relation: '配偶',
+      relation: '本人',
       plan: '基础版',
       isApplyVisa: false,
       customerNameEn: '',

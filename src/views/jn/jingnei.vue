@@ -291,7 +291,7 @@ export default {
         }
       ],
       plan: '基础版',
-      relation: '配偶'
+      relation: '本人'
     }
   },
   watch: {

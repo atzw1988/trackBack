@@ -2,7 +2,7 @@
   <div class="home">
     <div style="height:1px"></div>
     <div class="pages" ref="pages">
-      <div class="box">
+      <div class="box" v-if="!healthyShow">
         <div class="pageTitle">{{pageTitle}}</div>
         <div class="page" ref="page">
           <div class="test">
@@ -166,6 +166,50 @@
           <div class="right">立即投保</div>
         </div>
       </div>
+      <div class="box" v-else>
+        <div class="pageTitle">健康告知</div>
+        <div class="tips">为了保证被保险人的保险权益在理赔时不受到影响，请如实完成健康告知</div>
+        <div class="noticeBox" ref="notice">
+          <div class="notice">
+            <div class="border">投保人确认所有被保险人没有以下情况：</div>
+            <div>1.过去2年内投保人身保险或健康保险时，是否被保险公司拒保、延期、加费或者附加条件承保？</div>
+            <div>2.目前是否从事高危职业(详见高危职业表)？</div>
+            <div>3.过去1年内是否有<text class="fontRed">除以下情况外</text>的健康检查结果异常（如血液、超声、影像、内镜、病理检查）？</div>
+            <div>a) 轻度脂肪肝:腹部B超提示为轻/中度脂肪肝且肝功能正常；</div>
+            <div>b) 血脂偏高:未经药物控制的情况下，甘油三脂﹤4mmol/L且总胆固醇﹤7mmol/L；</div>
+            <div>c) 高/低血压： 收缩压 （高压） 90mmHg~160mmHg或舒张压（低压）60mmHg~100mmHg；</div>
+            <div>d) 鼻炎、咽炎、慢性扁桃体炎、腺样体肥大；</div>
+            <div>e) 病毒性感冒引起的血常规检查异常;</div>
+            <div>f) 体重过重（BMI小于等于30），但无血糖、血压、血脂异常；</div>
+            <div>g) 尿酸升高： 但血清尿酸小于550uml/l, 无痛风症状；</div>
+            <div>h) 乙肝病毒携带者，但肝功能（丙氨酸转氨酶（ALT，俗称谷丙转氨酶）和天门冬氨酸转氨酶（AST，俗称谷草转氨酶）)及肝脾超声无异常；</div>
+            <div>i) 经检查有胆囊结石，但肝功能（谷丙转氨酶、谷草转氨酶、谷氨酰转移酶、 碱性磷酸、 总胆红素）结果无异常<text class="fontRed">（注：胆囊结石及其并发症和胆囊炎引起的治疗，不承担赔付责任）</text>；</div>
+            <div>j) 经B超提示为肾囊肿<text class="fontRed">（注：肾囊肿及其并发症引起的治疗，不承担赔付责任）</text>；</div>
+            <div>k) 经B超提示少于2个、且最大直径小于5MM 的肝囊肿<text class="fontRed">（注：肝囊肿及其并发症引起的治疗，不承担赔付责任）</text>；</div>
+            <div>l) 经胃镜检查提示为浅表性胃炎，但不包括萎缩性胃炎<text class="fontRed">（注：浅表性胃炎及其并发症引起的治疗，不承担赔付责任）</text>；</div>
+            <div>m) B超提示为乳腺小叶增生、或乳腺结节（BI-RADS 分类1-2级）、无占位<text class="fontRed">（注：乳腺结节及其并发症引起的治疗，不承担赔付责任）</text>；</div>
+            <div>4.过去2年是否曾<text class="fontRed">除以下原因外</text>导致住院或有医生提出进一步复查、治疗或手术建议？</div>
+            <div>a) 分娩；</div>
+            <div>b) 急性呼吸系统疾病(含肺炎、上呼吸道感染等)；</div>
+            <div>c) 急性胃肠炎、急性阑尾炎；</div>
+            <div>d) 胆囊结石已进行胆囊切除手术；</div>
+            <div>e) 胆囊息肉已进行胆囊切除手术且病理结果为良性;</div>
+            <div>f) 胃肠息肉≤1cm，已进行切除手术且病理结果为良性；</div>
+            <div>g) 意外受伤引起的软组织损伤；</div>
+            <div>h) 意外住院在5天以内且已痊愈，并无后遗症或器官缺损；</div>
+            <div>i) 鼻炎。</div>
+            <div>5.<text class="fontRed">目前或过往是否患有下列疾病或症状</text>：良/恶性肿瘤、白血病、II级及以上高血压（收缩压大于160mmHg，或舒张压大于100mmHg）、糖尿病或空腹血糖大於等於7mmol/L、冠心病/冠状动脉狭窄、心肌梗死、风湿性心脏病、心功能不全二级以上、脑梗死/脑出血/脑血管畸形、慢性肾炎、肾病综合征、肾萎缩、肾髓质囊性病肾功能不全、肾切除、肝炎、肝炎病毒携带者、肝硬化、再生障碍性贫血、系统性红斑狼疮、类风湿性关节炎、帕金森氏病、癫痫、精神病、肺结核、慢性阻塞性肺病、瘫痪、慢性萎缩性胃炎、慢性胆囊炎、胆管结石、硬化性胆管炎、传导性耳聋、椎间盘突出症、克罗恩病（节段性肠炎）、溃疡性结肠炎、先天性疾病、法定传染病（包含甲类及乙类）、肿瘤标记物或病理学检查异常、胃肠息肉（不含胃肠息肉≤1cm，已进行切除手术且病理结果为良性）、甲状腺结节、痛风？</div>
+            <div>6.<text class="fontRed">过去1年内是否存在下列症状</text>：反复头痛、晕厥、胸痛、气急、紫绀、持续反复发热、抽搐、不明原因皮下出血点、咯血、反复呕吐、进食梗噎 感或吞咽困难、呕血、浮肿、腹痛、黄疸（新生儿黄疸且已治愈的除外）、便血、血尿、蛋白尿、不明原因消瘦（体重减轻5公斤以上）、职业病、酒精中毒、其他药品中毒、智能障碍、五官/脊柱/胸廓/四肢/手指/足趾缺损/畸形或功能障碍？</div>
+            <div>7.2周岁以下被保险人是否存在以下情况：出生时体重低于2.5公斤、早产、窒息、发育迟缓、脑瘫？</div>
+            <div>8.被保险人在投保前是否确诊感染新型冠状病毒或被确认疑似病例（以影像学诊断为准），或已在定点隔离，或者投保时体温超过37.2℃？</div>
+            <div class="border"><text class="fontRed">所有被保险人以上事项均为“否”，则符合投保条件。</text>如有隐瞒或告知不实，影响保险公司承保决定的，所签发的保单视为无效，保险公司有权解除合同，并对合同解除前所发生的任何保险事故不承担任何责任。</div>
+          </div>
+          <div class="healthbtn">
+            <div class="noAllow">部分符合条件</div>
+            <div class="allow">全部符合条件</div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="mask"></div>
     <video id="awesome" width="375" height="667" controls autoplay loop></video>
@@ -178,7 +222,7 @@ import { get } from '@/utils/jutils.js'
 import { getUserInfo } from '@/api/api.js'
 import html2canvas from 'html2canvas'
 import Whammy from 'whammy'
-import { setTimeout } from 'timers'
+// import { setTimeout, clearInterval } from 'timers'
 export default {
   name: 'baiwan',
   data () {
@@ -194,7 +238,7 @@ export default {
       personList: [
         {
           socialSecurity: 1,
-          relation: '配偶',
+          relation: '本人',
           elseName: '',
           elseCardType: '身份证',
           elseCardNo: '',
@@ -206,7 +250,7 @@ export default {
       ],
       personItem: {
         socialSecurity: 1,
-        relation: '配偶',
+        relation: '本人',
         elseName: '',
         elseCardType: '身份证',
         elseCardNo: '',
@@ -227,7 +271,18 @@ export default {
       select: null,
       premium: 0,
       totalMoney: 0,
-      loading: false
+      loading: false,
+      healthyShow: false,
+      cardType: {
+        '111': '身份证',
+        '414': '护照',
+        '511': '台胞证',
+        '516': '港澳台居民证'
+      },
+      sexList: {
+        '1': '男',
+        '2': '女'
+      }
     }
   },
   methods: {
@@ -259,6 +314,7 @@ export default {
         clearInterval(this.timer)
         const item = this.list[index]
         if (item.type === 1) {
+          this.select = this.healthyShow ? this.$refs.notice : this.$refs.page
           this.select.scrollTop = item.top
         } else if (item.type === 2 || item.type === 9 || item.type === 5) {
           if (item.numbers) {
@@ -276,12 +332,12 @@ export default {
           this.createSaveFrame()
         }, 200)
         if (index < this.list.length - 1) {
-          setTimeout(() => {
+          window.setTimeout(() => {
             createVideo(index + 1)
           }, item.time * 5)
         } else {
           console.log('生成结束' + new Date())
-          clearInterval(this.timer)
+          window.clearInterval(this.timer)
           window.requestAnimationFrame(this.finalizeVideo)
         }
       }
@@ -533,6 +589,45 @@ export default {
                 font-weight: bold;
               }
             }
+          }
+        }
+        .tips {
+          padding: 7px 15px;
+          background-color: #e5e5e5;
+        }
+        .noticeBox {
+          padding: 10px 15px 0;
+          background-color: #ffffff;
+          height: 479px;
+          overflow-y: auto;
+          .notice {
+            padding: 10px;
+            background-color: #F5F5F5;
+            line-height: 25px;
+            position: relative;
+          }
+        }
+        .healthbtn {
+          height: 44px;
+          padding-top: 15px;
+          background-color: #ffffff;
+          display: flex;
+          align-items: center;
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          justify-content: space-between;
+          .noAllow, .allow {
+            width: 50%;
+            text-align: center;
+            border-top: 1px solid #eeeeee;
+            height: 44px;
+            line-height: 44px;
+          }
+          .allow {
+            background-color: #007BD9;
+            color: #ffffff;
           }
         }
       }

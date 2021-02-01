@@ -126,7 +126,7 @@
                   <div class="formList picker addperson">
                     <div class="left">保费</div>
                     <div class="right">
-                      <span class="price">{{total}}</span>元
+                      <span class="price">20</span>元
                     </div>
                   </div>
                 </div>
@@ -156,7 +156,7 @@
         </div>
       </div>
     </div>
-    <!-- <div class="mask"></div> -->
+    <div class="mask"></div>
     <video id="awesome" width="375" height="667" controls autoplay loop></video>
     <track-button @click="begin" :loading="loading"></track-button>
   </div>
@@ -164,6 +164,7 @@
 
 <script>
 import { replay } from '@/mixin/replay.js'
+import { setTimeout } from 'timers'
 export default {
   name: 'chihuo',
   mixins: [replay],
@@ -173,6 +174,18 @@ export default {
       plan: '计划一',
       relation: '本人'
     }
+  },
+  mounted () {
+    let meta = document.createElement('meta')
+    meta.content = '测试'
+    meta.name = 'mymeta'
+    document.getElementsByTagName('head')[0].appendChild(meta)
+    console.log(document.getElementsByTagName('head')[0].childNodes)
+    setTimeout(() => {
+      const mymeta = document.getElementsByTagName('head')[0].childNodes[document.getElementsByTagName('head')[0].childNodes.length - 1]
+      document.getElementsByTagName('head')[0].removeChild(mymeta)
+      console.log(document.getElementsByTagName('head')[0].childNodes)
+    }, 5000)
   }
 }
 </script>

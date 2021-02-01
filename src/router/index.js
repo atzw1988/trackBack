@@ -293,6 +293,14 @@ const routes = [
       title: '吃货卫士免责事项'
     },
     component: () => import('@/views/cx/dutyCx')
+  },
+  {
+    path: '/xubao',
+    name: 'xubao',
+    meta: {
+      title: '确认信息'
+    },
+    component: () => import('@/views/xb/xubao')
   }
 ]
 

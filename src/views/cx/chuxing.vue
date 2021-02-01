@@ -121,7 +121,7 @@
                   <div class="formList picker addperson">
                     <div class="left">保费</div>
                     <div class="right">
-                      <span class="price">{{total}}</span>元
+                      <span class="price">50</span>元
                     </div>
                   </div>
                 </div>
@@ -151,7 +151,7 @@
         </div>
       </div>
     </div>
-    <!-- <div class="mask"></div> -->
+    <div class="mask"></div>
     <video id="awesome" width="375" height="667" controls autoplay loop></video>
     <track-button @click="begin" :loading="loading"></track-button>
   </div>
